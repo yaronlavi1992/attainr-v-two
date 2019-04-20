@@ -6,12 +6,16 @@ class CommitteeManagerController {
 //        println "session.name: ${session.user}"
 //        User user = User.findByName(session.user)
 //        println "${session.committee}"
-        List<User> userList = User.findAllByCommittee(user.committee)
-        List<Purchase> purchaseList = Purchase.createCriteria().list{
-            'user'{
-                eq('committee', session.committee)
-            }
-        }
+//        Committee committee = Committee.findById(session.committee.id)
+        def userList = User.findAllByCommittee(session.committee)
+//        List<Purchase> purchaseList = Purchase.findAllByCommittee(userIds)*.id
+        List<Purchase> purchaseList = Purchase.findAllByUserInList(userList)
+//        List<Purchase> purchaseList = Purchase.createCriteria().list{
+//            'user'{
+//                eq('committee', ${session.committee})
+//            }
+//        }
+
 //        List<Purchase> purchaseList = Purchase.findAllByUserAndName(committee, user.committee)
 //        List<Purchase> purchaseList = Purchase.findAllByUser(committee == num)
 //        userList.each {
