@@ -37,4 +37,23 @@ class ManagementController {
         purchaseService.save(purchase)
         redirect(controller: "Purchase", action: "index")
     }
+
+    def deny(Long id) {
+        Purchase purchase = purchaseService.get(id)
+        if(session.user == 'שלומית') {
+            Approval communityApp = new Approval()
+            communityApp.approved = false
+            purchase.communityApproval = communityApp
+        } else if(session.user == 'אבי') {
+            Approval accountantApp = new Approval()
+            accountantApp.approved = false
+            purchase.accountantApproval = accountantApp
+        } else if(session.permission == 'בינוני') {
+            Approval committeeApp = new Approval()
+            committeeApp.approved = false
+            purchase.committeeApproval = committeeApp
+        }
+        purchaseService.save(purchase)
+        redirect(controller: "Purchase", action: "index")
+    }
 }
