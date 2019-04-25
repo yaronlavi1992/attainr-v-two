@@ -1,18 +1,20 @@
 package attainrvtwo
 
+import org.apache.commons.lang.ObjectUtils
+
 class ManagementController {
 
     PurchaseService purchaseService
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond purchaseService.list(params), model:[purchaseCount: purchaseService.count()]
-//        println "session.name: ${session.user}"
-//        User user = User.findByName(session.user)
-//        println "user $user"
-//        List<Purchase> purchaseList = Purchase.findAllByUser(user)
-//        println purchaseList
-//        respond purchaseList, model:[purchaseCount: purchaseList.size()]
+        List<Purchase> purchaseList
+        if(session.user == 'שלומית') { // shows purchases approved by both committee and accountant
+            purchaseList = Purchase.findAllByAccountantApprovalInList(Approval.findAllByApproved(true))
+        } else if(session.user == 'אבי') { // shows purchases approved only by committee
+            purchaseList = Purchase.findAllByCommitteeApprovalInLists(Approval.findAllByApproved(true))
+        }
+        respond purchaseList, model:[purchaseCount: purchaseService.count()]
     }
 
     def edit(Long id) {

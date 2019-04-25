@@ -15,10 +15,11 @@ class Purchase {
     static constraints = {
         description()
         status(inList: ['בתהליך','הושלם','נרכש','לא_אושר','נדרש_תשלום','אושר'])
-        committeeApproval(nullable: true)
-        accountantApproval(nullable: true)
-        communityApproval(nullable: true)
-        ceoApproval(nullable: true)
+        committeeApproval(nullable : true)
+        accountantApproval(nullable : true)
+        communityApproval(nullable : true)
+        ceoApproval(nullable : true)
+//        user(display: false)
     }
 
     @Override

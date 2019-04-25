@@ -114,6 +114,7 @@ class UserController {
         User.list().each {
             if(params.username == "${it.name}" && params.password == "${it.password}") {
                 session.user = "${it.name}"
+                session.userId = it.id
                 session.committee = it.committee
                 session.committeeName = "${it.committee.name}"
                 session.permission = "${it.permission}"
