@@ -14,7 +14,7 @@ class Purchase {
 
     static constraints = {
         description()
-        status(inList: ['בתהליך','הושלם','נרכש','לא_אושר','נדרש_תשלום','אושר'])
+        status(inList: ['בתהליך','הושלם','נרכש','לא אושר','נדרש תשלום','אושר'])
         committeeApproval(nullable : true)
         accountantApproval(nullable : true)
         communityApproval(nullable : true)

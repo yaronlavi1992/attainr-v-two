@@ -25,11 +25,19 @@ class BootStrap {
         def ran = new User(committee: community_management, name: 'רן', password: '1', phone: '444',
                 email: 'g@blah.com', role: 'מנכל', permission: 'גבוה').save()
 
+        Approval kadureiKadursal = new Approval(approved: true)
+        new attainrvtwo.Purchase(user: shai, description: 'כדורי כדורסל', status: 'בתהליך', committeeApproval: kadureiKadursal,
+        accountantApproval: kadureiKadursal).save()
 
-        new attainrvtwo.Purchase(user: shai, description: 'כדורי כדורסל', status: 'בתהליך').save()
-        new attainrvtwo.Purchase(user: shai, description: 'בגדי ספורט', status: 'הושלם').save()
-        new attainrvtwo.Purchase(user: ben, description: 'פסטה', status: 'נרכש').save()
-        new attainrvtwo.Purchase(user: ben, description: 'קמח', status: 'לא_אושר').save()
+        Approval kadurRogby = new Approval(approved: false)
+        new attainrvtwo.Purchase(user: shai, description: 'כדור רוגבי', status: 'בתהליך', committeeApproval: kadurRogby).save()
+
+        new attainrvtwo.Purchase(user: shai, description: 'נעלי רוגבי', status: 'הושלם').save()
+
+        Approval magenZea = new Approval(approved: true)
+        new attainrvtwo.Purchase(user: ben, description: 'מגן זיעה', status: 'נרכש', committeeApproval: magenZea).save()
+
+        new attainrvtwo.Purchase(user: ben, description: 'פינג פונג', status: 'לא_אושר').save()
         new attainrvtwo.Purchase(user: nir, description: 'חבילת אינטרנט', status: 'נדרש_תשלום').save()
         new attainrvtwo.Purchase(user: yaron, description: 'שניצל', status: 'אושר').save()
     }

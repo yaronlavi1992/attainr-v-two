@@ -12,7 +12,7 @@ class ManagementController {
         if(session.user == 'שלומית') { // shows purchases approved by both committee and accountant
             purchaseList = Purchase.findAllByAccountantApprovalInList(Approval.findAllByApproved(true))
         } else if(session.user == 'אבי') { // shows purchases approved only by committee
-            purchaseList = Purchase.findAllByCommitteeApprovalInLists(Approval.findAllByApproved(true))
+            purchaseList = Purchase.findAllByCommitteeApprovalInList(Approval.findAllByApproved(true))
         }
         respond purchaseList, model:[purchaseCount: purchaseService.count()]
     }
