@@ -3,7 +3,7 @@ package attainrvtwo
 class Purchase {
 
     String description
-    String status
+    PurchaseStatus status
     Approval committeeApproval
     Approval accountantApproval
     Approval communityApproval
@@ -14,7 +14,7 @@ class Purchase {
 
     static constraints = {
         description()
-        status(inList: ['בתהליך','הושלם','נרכש','לא אושר','נדרש תשלום','אושר'])
+        status()
         committeeApproval(nullable : true)
         accountantApproval(nullable : true)
         communityApproval(nullable : true)

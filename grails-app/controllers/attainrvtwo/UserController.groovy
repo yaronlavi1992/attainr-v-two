@@ -118,6 +118,7 @@ class UserController {
                 session.committee = it.committee
                 session.committeeName = "${it.committee.name}"
                 session.permission = "${it.permission}"
+                session.role = "${it.role}"
                 userFound = true
             }
         }

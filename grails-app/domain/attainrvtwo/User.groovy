@@ -17,7 +17,7 @@ class User {
         name()
         password(password: true)
         email(nullable: true, email: true)
-        role(inList: ["מתנדב", "מנהל מחלקה", "חשב הקהילה", "מנהלת הקהילה", "מנהל כללי", "מפתח המערכת"])
+        role(inList: ["מתנדב", "מנהל מחלקה", "חשב הקהילה", "מנהל הקהילה", "מנהל כללי", "מפתח המערכת"])
         permission(inList: ["נמוך", "בינוני", "גבוה"])
     }
 
