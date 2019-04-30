@@ -13,8 +13,8 @@
                 <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
                 <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
                 <g:if test="${session.permission == 'בינוני' || session.permission == 'גבוה'}">
-                    <li><g:link class="btn bg-danger" action="deny" controller="management" params="[id: params.id]">דחיית בקשה</g:link></li>
-                    <li><g:link class="btn bg-success" action="approve" controller="management" params="[id: params.id]">אישור בקשה</g:link></li>
+                    <li><g:link class="btn bg-danger" action="choice" controller="management" params="[id: params.id, choice: false]">דחיית בקשה</g:link></li>
+                    <li><g:link class="btn bg-success" action="choice" controller="management" params="[id: params.id, choice: true]">אישור בקשה</g:link></li>
                 </g:if>
             </ul>
         </div>

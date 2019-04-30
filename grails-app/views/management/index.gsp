@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--<%@ page import="attainrvtwo.Committee" contentType="text/html;charset=UTF-8" %>-->
 <html xmlns:g="http://www.w3.org/1999/html">
 <head>
     <meta name="layout" content="main" />
@@ -11,6 +12,8 @@
     <ul>
 <!--        <li><a class="home" href="${createLink(uri: '/volunteer/index')}"><g:message code="default.home.label"/></a></li>-->
         <li><g:link class="create" action="create" controller="purchase">בקשה חדשה</g:link></li>
+        <li><g:select class="btn bg-primary" action="filterByCommittee" controller="management" from="${Committee.list()}" optionKey="id" optionValue="${name}" name="committees" value="${committees}" noSelection="${['null':'Select..']}"/></li>
+<!--        <li><g:select class="btn bg-primary" action="filterByCommittee" controller="management" noSelection="${['null':'Select..']}" from="['ספורט','חינוך','רווחה','ניהול קהילה','ניהול מערכת']" name="committees" value="${committees}"/></li>-->
     </ul>
 </div>
 <div id="list-purchase" class="content scaffold-list" role="main">

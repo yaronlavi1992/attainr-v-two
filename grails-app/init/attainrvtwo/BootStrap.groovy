@@ -25,9 +25,12 @@ class BootStrap {
         def ran = new User(committee: community_management, name: 'רן', password: '1', phone: '444',
                 email: 'g@blah.com', role: 'מנכל', permission: 'גבוה').save()
 
+        Quote q1 = new attainrvtwo.Quote(pricePerUnit: 20, qty: 5, totalPrice: 5100)
+        Quote q2 = new attainrvtwo.Quote(pricePerUnit: 30, qty: 5, totalPrice: 150)
+        Quote q3 = new attainrvtwo.Quote(pricePerUnit: 40, qty: 5, totalPrice: 200)
         Approval kadureiKadursal = new Approval(approved: true)
         new attainrvtwo.Purchase(user: shai, description: 'כדורי כדורסל', status: 'בתהליך', committeeApproval: kadureiKadursal,
-        accountantApproval: kadureiKadursal).save()
+        accountantApproval: kadureiKadursal, quotes: [q1,q2,q3]).save()
 
         Approval kadurRogby = new Approval(approved: false)
         new attainrvtwo.Purchase(user: shai, description: 'כדור רוגבי', status: 'בתהליך', committeeApproval: kadurRogby).save()
@@ -40,6 +43,7 @@ class BootStrap {
         new attainrvtwo.Purchase(user: ben, description: 'פינג פונג', status: 'לא_אושר').save()
         new attainrvtwo.Purchase(user: nir, description: 'חבילת אינטרנט', status: 'נדרש_תשלום').save()
         new attainrvtwo.Purchase(user: yaron, description: 'שניצל', status: 'אושר').save()
+
     }
     def destroy = {
     }

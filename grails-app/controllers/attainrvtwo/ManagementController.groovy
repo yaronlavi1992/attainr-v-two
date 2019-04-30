@@ -1,7 +1,5 @@
 package attainrvtwo
 
-import org.apache.commons.lang.ObjectUtils
-
 class ManagementController {
 
     PurchaseService purchaseService
@@ -21,41 +19,43 @@ class ManagementController {
         respond purchaseService.get(id)
     }
 
-    def approve(Long id) {
+    def filterByCommittee() {
+//        Committee selectedCommittee = Committee.findByName(params.committees)
+        Committee selectedCommittee = Committee.findByName(selectedCommittee)
+        List<User> userList = User.findAllByCommittee(selectedCommittee)
+        List<Purchase> purchaseList = Purchase.findAllByUserInList(userList)
+        respond purchaseList, model:[purchaseCount: purchaseService.count()]
+    }
+
+    def choice(Long id) {
         Purchase purchase = purchaseService.get(id)
         if(session.user == 'שלומית') {
             Approval communityApp = new Approval()
-            communityApp.approved = true
+            communityApp.approved = (params.choice).toBoolean() ? true : false
             purchase.communityApproval = communityApp
         } else if(session.user == 'אבי') {
             Approval accountantApp = new Approval()
-            accountantApp.approved = true
+            accountantApp.approved = (params.choice).toBoolean() ? true : false
             purchase.accountantApproval = accountantApp
         } else if(session.permission == 'בינוני') {
             Approval committeeApp = new Approval()
-            committeeApp.approved = true
+            committeeApp.approved = (params.choice).toBoolean() ? true : false
             purchase.committeeApproval = committeeApp
         }
         purchaseService.save(purchase)
+        statusUpdate(purchase)
         redirect(controller: "Purchase", action: "index")
     }
 
-    def deny(Long id) {
-        Purchase purchase = purchaseService.get(id)
-        if(session.user == 'שלומית') {
-            Approval communityApp = new Approval()
-            communityApp.approved = false
-            purchase.communityApproval = communityApp
-        } else if(session.user == 'אבי') {
-            Approval accountantApp = new Approval()
-            accountantApp.approved = false
-            purchase.accountantApproval = accountantApp
-        } else if(session.permission == 'בינוני') {
-            Approval committeeApp = new Approval()
-            committeeApp.approved = false
-            purchase.committeeApproval = committeeApp
+    def statusUpdate(Purchase purchaseInstance) {
+        switch (purchaseInstance.status) {
+            case 'בתהליך':
+                if (purchaseInstance.ceoApproval?.approved) { // ceo approved
+                    purchaseInstance.status = 'אושר'
+                } else if (purchaseInstance.communityApproval?.approved && purchaseInstance.quotes?.asList().every{ it.totalPrice < 5000 }) { // community manager approved and all quotes below 5000 ILS
+                    purchaseInstance.status = 'אושר'
+                }
         }
-        purchaseService.save(purchase)
-        redirect(controller: "Purchase", action: "index")
+        purchaseService.save(purchaseInstance)
     }
 }
