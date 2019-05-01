@@ -16,6 +16,9 @@
                     <li><g:link class="btn bg-danger" action="choice" controller="management" params="[id: params.id, choice: false]">דחיית בקשה</g:link></li>
                     <li><g:link class="btn bg-success" action="choice" controller="management" params="[id: params.id, choice: true]">אישור בקשה</g:link></li>
                 </g:if>
+                <g:if test="${this.purchase.get(params.id).status == 'אושר'}">
+                    <li><g:link class="btn bg-success" name="isPurchased" action="choice" controller="management" params="[id: params.id, isPurchased: true]">נרכש</g:link></li>
+                </g:if>
             </ul>
         </div>
         <div id="show-purchase" class="content scaffold-show" role="main">

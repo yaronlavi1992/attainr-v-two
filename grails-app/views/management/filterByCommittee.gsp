@@ -10,10 +10,10 @@
 <a href="#list-purchase" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 <div class="nav" role="navigation">
     <ul>
-<!--        <li><a class="home" href="${createLink(uri: '/volunteer/index')}"><g:message code="default.home.label"/></a></li>-->
+        <!--        <li><a class="home" href="${createLink(uri: '/volunteer/index')}"><g:message code="default.home.label"/></a></li>-->
         <li><g:link class="create" action="create" controller="purchase">בקשה חדשה</g:link></li>
         <li><g:select class="btn bg-primary" id="commDDLid" name="committeeDDL" action="filterByCommittee" controller="management" from="${Committee.list()}" optionKey="id" optionValue="${name}" value="${committees}" noSelection="${['null':'Select..']}" onchange="goToPage(this.value)"/></li>
-<!--        <li><g:select class="btn bg-primary" action="filterByCommittee" controller="management" noSelection="${['null':'Select..']}" from="['ספורט','חינוך','רווחה','ניהול קהילה','ניהול מערכת']" name="committees" value="${committees}"/></li>-->
+        <!--        <li><g:select class="btn bg-primary" action="filterByCommittee" controller="management" noSelection="${['null':'Select..']}" from="['ספורט','חינוך','רווחה','ניהול קהילה','ניהול מערכת']" name="committees" value="${committees}"/></li>-->
     </ul>
 </div>
 <div id="list-purchase" class="content scaffold-list" role="main">
