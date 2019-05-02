@@ -1,7 +1,5 @@
 package attainrvtwo
 
-import com.sun.xml.internal.bind.v2.TODO
-
 class ManagementController {
 
     PurchaseService purchaseService
@@ -25,6 +23,7 @@ class ManagementController {
     }
 
     def filterByCommittee() {
+        session.filterPurchases = true
         Committee selectedCommittee = committeeService.get(params.id)
         List<User> userList = User.findAllByCommittee(selectedCommittee)
         purchaseList = Purchase.findAllByUserInList(userList)
