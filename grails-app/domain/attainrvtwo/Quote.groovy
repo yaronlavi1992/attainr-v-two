@@ -15,6 +15,5 @@ class Quote {
         pricePerUnit()
         totalPrice(editable: false)
         remarks(nullable: true)
-        purchase()
     }
 }

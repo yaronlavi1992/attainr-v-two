@@ -11,8 +11,7 @@ class UserController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        def list = userService.list(params)
-        respond list, model:[userCount: userService.count()]
+        respond userService.list(params), model:[userCount: userService.count()]
     }
 
     def show(Long id) {

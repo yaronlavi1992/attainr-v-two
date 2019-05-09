@@ -22,6 +22,13 @@ class ReceiptController {
         respond new Receipt(params)
     }
 
+//
+//    def save = {
+//        printin request.getFile("uploadedFile").inputStream.text
+//        def downloadedfile = request.getFile('uploadedFile')
+//        downloadedfile.transferTo(new File('c:\\Users\\yawik\\Downloads\\Capture.PNG'))
+//    }
+
     def save(Receipt receipt) {
         if (receipt == null) {
             notFound()

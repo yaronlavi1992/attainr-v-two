@@ -25,6 +25,14 @@
                 </g:eachError>
             </ul>
             </g:hasErrors>
+
+<!--            <g:form controller="receipt" method="post" action="save" enctype="multipart/form-data">-->
+<!--                <fieldset class="form">-->
+<!--                    <label>Upload File</label> <input type="file" name="uploadedFile"/>-->
+<!--                    <input type="submit"/>-->
+<!--                </fieldset>-->
+<!--            </g:form>-->
+
             <g:form resource="${this.receipt}" method="POST">
                 <fieldset class="form">
                     <f:all bean="receipt"/>
