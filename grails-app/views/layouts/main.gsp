@@ -16,17 +16,28 @@
 
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark navbar-static-top" role="navigation">
-    <a class="navbar-brand" href="/#"><asset:image src="company_logo.png" alt="Grails Logo"/></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" href="/#">
+        <asset:image src="company_logo.png" alt="Grails Logo"/>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
+            aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <g:if test="${session.user}">
         <div class="container-fluid text-light">
-            <br />
+            <br/>
             <div class="mx-auto text-center" style="width: 300px;" dir="rtl">
                 פרטי משתמש\ת:<br/>
                 שם: ${session.user} |
-                מחלקה: ${session.committeeName}
+                <g:if test="${session.permission == 'גבוה'}">
+                    הנהלת מערכת
+                </g:if>
+                <g:elseif test="${session.permission == 'בינוני'}">
+                    הנהלת מחלקת: ${session.department}
+                </g:elseif>
+                <g:elseif test="${session.permission == 'נמוך'}">
+                    הנהלת וועדת: ${session.committee}
+                </g:elseif>
                 <br/>
                 <g:link controller="user" action="logout">יציאה מהמערכת</g:link>
             </div>

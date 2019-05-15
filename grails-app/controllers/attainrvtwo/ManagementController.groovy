@@ -13,7 +13,7 @@ class ManagementController {
             } else if (session.role == 'מנהל הקהילה') { // shows purchases approved by both committee and accountant
                 purchaseList = Purchase.findAllByAccountantApprovalInList(Approval.findAllByApproved(true))
             } else if (session.role == 'חשב הקהילה') { // shows purchases approved only by committee
-                purchaseList = Purchase.findAllByCommitteeApprovalInList(Approval.findAllByApproved(true))
+                purchaseList = Purchase.findAllByDepartmentApprovalInList(Approval.findAllByApproved(true))
             }
         respond purchaseList, model:[purchaseCount: purchaseService.count()]
     }
@@ -49,7 +49,7 @@ class ManagementController {
         } else if (session.role == 'מנהל מחלקה') {
             Approval committeeApp = new Approval()
             committeeApp.approved = (params.choice).toBoolean() ? true : false
-            purchase.committeeApproval = committeeApp
+            purchase.departmentApproval = committeeApp
         }
         purchaseService.save(purchase)
         statusUpdate(purchase)

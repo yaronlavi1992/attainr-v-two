@@ -4,7 +4,7 @@ class Purchase {
 
     String description
     PurchaseStatus status
-    Approval committeeApproval
+    Approval departmentApproval
     Approval accountantApproval
     Approval communityApproval
     Approval ceoApproval
@@ -15,7 +15,7 @@ class Purchase {
     static constraints = {
         description()
         status()
-        committeeApproval(nullable : true)
+        departmentApproval(nullable : true)
         accountantApproval(nullable : true)
         communityApproval(nullable : true)
         ceoApproval(nullable : true)

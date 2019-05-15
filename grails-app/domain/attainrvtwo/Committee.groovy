@@ -2,18 +2,19 @@ package attainrvtwo
 
 class Committee {
 
-    String name
+    CommitteeOf name
 
-    static hasMany = [users:User, summaries:Summary]
+    static hasMany = [summaries: Summary, users: User]
+    static belongsTo = [department: Department]
 
     static constraints = {
-        name(unique:true, inList: ['ספורט','חינוך','רווחה','ניהול מערכת','ניהול קהילה'])
-        users(nullable: true)
+        name()
+        department()
         summaries(nullable: true)
     }
 
     @Override
-    public String toString() {
-        return name
+    String toString() {
+        return getName()
     }
 }

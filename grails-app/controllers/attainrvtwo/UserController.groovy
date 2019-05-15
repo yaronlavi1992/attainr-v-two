@@ -1,6 +1,7 @@
 package attainrvtwo
 
 import grails.validation.ValidationException
+
 import static org.springframework.http.HttpStatus.*
 
 class UserController {
@@ -101,7 +102,11 @@ class UserController {
         if(session.permission == "נמוך") {
             redirect(controller: 'volunteer', action: 'index')
         } else if(session.permission == "בינוני") {
+            if((String)session.committee == "הנהלה") {
+            redirect(controller: 'departmentManager', action: 'index')
+            } else {
             redirect(controller: 'committeeManager', action: 'index')
+            }
         } else {
             redirect(controller: 'management', action: 'index')
         }
@@ -114,8 +119,8 @@ class UserController {
             if(params.username == "${it.name}" && params.password == "${it.password}") {
                 session.user = "${it.name}"
                 session.userId = it.id
-                session.committee = it.committee
-                session.committeeName = "${it.committee.name}"
+                session.committee = it?.committee
+                session.department = (it.committee).department
                 session.permission = "${it.permission}"
                 session.role = "${it.role}"
                 userFound = true

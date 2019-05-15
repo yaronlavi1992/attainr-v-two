@@ -14,10 +14,10 @@ class DevController {
         Approval committeeApp = new Approval()
         committeeApp.approved = true
 
-        purchase.committeeApproval = committeeApp
+        purchase.departmentApproval = committeeApp
         purchaseService.save(purchase)
 
         //redirect (controller: "Purchase", action: "show/$pid", )
-        render "Purchase: ${purchase}, ${purchase.committeeApproval}"
+        render "Purchase: ${purchase}, ${purchase.departmentApproval}"
     }
 }
