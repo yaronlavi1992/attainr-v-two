@@ -25,7 +25,7 @@ enum CommitteeOf {
         this.committeeLiteral = value
     }
 
-    String getDepartmentLiteral() {
+    String getCommitteeLiteral() {
         return this.committeeLiteral
     }
 

@@ -1,9 +1,9 @@
 package attainrvtwo
 
-import grails.testing.services.ServiceUnitTest
+import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-class VolunteerServiceSpec extends Specification implements ServiceUnitTest<VolunteerService>{
+class DepartmentSpec extends Specification implements DomainUnitTest<Department> {
 
     def setup() {
     }

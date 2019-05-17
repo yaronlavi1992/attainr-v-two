@@ -20,7 +20,6 @@ enum DepartmentOf {
 
     @Override
     String toString() {
-//        return name()
         return getDepartmentLiteral()
     }
 }

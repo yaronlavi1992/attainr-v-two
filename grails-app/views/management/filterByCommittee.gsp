@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <!--<%@ page import="attainrvtwo.Committee" contentType="text/html;charset=UTF-8" %>-->
 <html xmlns:g="http://www.w3.org/1999/html">
 <head>

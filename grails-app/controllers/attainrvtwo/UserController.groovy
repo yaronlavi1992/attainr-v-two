@@ -95,22 +95,20 @@ class UserController {
     }
 
     def newPurchase() {
+        if(session.permission == PermissionOf.MID && session.committee == CommitteeOf.MANAGEMENT) {
+            session.departmentApp = true
+        }
         redirect(controller: 'purchase', action: 'create')
     }
 
     def statusDisplay() {
-        if(session.permission == "נמוך") {
-            redirect(controller: 'volunteer', action: 'index')
-        } else if(session.permission == "בינוני") {
-            if((String)session.committee == "הנהלה") {
-            redirect(controller: 'departmentManager', action: 'index')
-            } else {
+        if(session.permission == PermissionOf.LOW) {
             redirect(controller: 'committeeManager', action: 'index')
-            }
-        } else {
+        } else if(session.permission == PermissionOf.MID && session.committee == CommitteeOf.MANAGEMENT) {
+            redirect(controller: 'departmentManager', action: 'index')
+        } else if(session.permission == PermissionOf.HIGH) {
             redirect(controller: 'management', action: 'index')
         }
-//        redirect(controller: 'purchase', action: 'index')
     }
 
     def login() {
@@ -119,10 +117,10 @@ class UserController {
             if(params.username == "${it.name}" && params.password == "${it.password}") {
                 session.user = "${it.name}"
                 session.userId = it.id
-                session.committee = it?.committee
+                session.committee = (it?.committee).name
                 session.department = (it.committee).department
-                session.permission = "${it.permission}"
-                session.role = "${it.role}"
+                session.permission = it.permission
+                session.role = it.role
                 userFound = true
             }
         }

@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<!doctype html>
+<!--<%@ page import="attainrvtwo.PermissionOf" contentType="text/html;charset=UTF-8" %>-->
+<!--<%@ page import="attainrvtwo.PurchaseStatus" contentType="text/html;charset=UTF-8" %>-->
 <html>
     <head>
         <meta name="layout" content="main" />
@@ -12,11 +14,11 @@
                 <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
                 <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
                 <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-                <g:if test="${session.permission == 'בינוני' || session.permission == 'גבוה'}">
+                <g:if test="${session.permission == PermissionOf.MID || session.permission == PermissionOf.HIGH}">
                     <li><g:link class="btn bg-danger" action="choice" controller="management" params="[id: params.id, choice: false]">דחיית בקשה</g:link></li>
                     <li><g:link class="btn bg-success" action="choice" controller="management" params="[id: params.id, choice: true]">אישור בקשה</g:link></li>
                 </g:if>
-                <g:if test="${this.purchase.get(params.id).status == 'אושר'}">
+                <g:if test="${this.purchase.get(params.id).status == PurchaseStatus.APPROVED}">
                     <li><g:link class="btn bg-success" name="isPurchased" action="choice" controller="management" params="[id: params.id, isPurchased: true]">נרכש</g:link></li>
                 </g:if>
             </ul>

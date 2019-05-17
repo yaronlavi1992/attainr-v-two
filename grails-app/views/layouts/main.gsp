@@ -1,4 +1,5 @@
 <!doctype html>
+<!--<%@ page import="attainrvtwo.PermissionOf" contentType="text/html;charset=UTF-8" %>-->
 <html lang="en" class="no-js">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -29,13 +30,13 @@
             <div class="mx-auto text-center" style="width: 300px;" dir="rtl">
                 פרטי משתמש\ת:<br/>
                 שם: ${session.user} |
-                <g:if test="${session.permission == 'גבוה'}">
+                <g:if test="${session.permission == PermissionOf.HIGH}">
                     הנהלת מערכת
                 </g:if>
-                <g:elseif test="${session.permission == 'בינוני'}">
+                <g:elseif test="${session.permission == PermissionOf.MID}">
                     הנהלת מחלקת: ${session.department}
                 </g:elseif>
-                <g:elseif test="${session.permission == 'נמוך'}">
+                <g:elseif test="${session.permission == PermissionOf.LOW}">
                     הנהלת וועדת: ${session.committee}
                 </g:elseif>
                 <br/>

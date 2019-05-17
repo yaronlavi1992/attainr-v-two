@@ -19,7 +19,6 @@ enum PurchaseStatus {
 
     @Override
     String toString() {
-//        return name()
         return getStatusLiteral()
     }
 }

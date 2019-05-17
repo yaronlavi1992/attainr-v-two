@@ -11,10 +11,18 @@ class PurchaseController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond purchaseService.list(params), model:[purchaseCount: purchaseService.count()]
+        respond purchaseService.list(params), model: [purchaseCount: purchaseService.count()]
     }
 
     def show(Long id) {
+        if (session.role == RoleOf.DEPARTMENT_MANAGER && session.departmentApp) {
+            Purchase purchase = purchaseService.get(id)
+            Approval departmentApp = new Approval()
+            departmentApp.approved = true
+            purchase.departmentApproval = departmentApp
+            purchaseService.save(purchase)
+            session.departmentApp = false
+        }
         respond purchaseService.get(id)
     }
 
@@ -31,7 +39,7 @@ class PurchaseController {
         try {
             purchaseService.save(purchase)
         } catch (ValidationException e) {
-            respond purchase.errors, view:'create'
+            respond purchase.errors, view: 'create'
             return
         }
 
@@ -57,7 +65,7 @@ class PurchaseController {
         try {
             purchaseService.save(purchase)
         } catch (ValidationException e) {
-            respond purchase.errors, view:'edit'
+            respond purchase.errors, view: 'edit'
             return
         }
 
@@ -66,7 +74,7 @@ class PurchaseController {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'purchase.label', default: 'Purchase'), purchase.id])
                 redirect purchase
             }
-            '*'{ respond purchase, [status: OK] }
+            '*' { respond purchase, [status: OK] }
         }
     }
 
@@ -81,9 +89,9 @@ class PurchaseController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'purchase.label', default: 'Purchase'), id])
-                redirect action:"index", method:"GET"
+                redirect action: "index", method: "GET"
             }
-            '*'{ render status: NO_CONTENT }
+            '*' { render status: NO_CONTENT }
         }
     }
 
@@ -93,7 +101,7 @@ class PurchaseController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'purchase.label', default: 'Purchase'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*'{ render status: NOT_FOUND }
+            '*' { render status: NOT_FOUND }
         }
     }
 }
