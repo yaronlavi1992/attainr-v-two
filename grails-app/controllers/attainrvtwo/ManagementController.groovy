@@ -4,15 +4,16 @@ class ManagementController {
 
     PurchaseService purchaseService
     CommitteeService committeeService
+    DepartmentService departmentService
     List<Purchase> purchaseList
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
             if (session.role == RoleOf.COMMUNITY_CEO) { // shows purchases approved by all except ceo
                 purchaseList = Purchase.findAllByCommunityApprovalInList(Approval.findAllByApproved(true))
-            } else if (session.role == RoleOf.COMMUNITY_MANAGER) { // shows purchases approved by both committee and accountant
+            } else if (session.role == RoleOf.COMMUNITY_MANAGER) { // shows purchases approved by both department and accountant
                 purchaseList = Purchase.findAllByAccountantApprovalInList(Approval.findAllByApproved(true))
-            } else if (session.role == RoleOf.COMMUNITY_ACCOUNTANT) { // shows purchases approved only by committee
+            } else if (session.role == RoleOf.COMMUNITY_ACCOUNTANT) { // shows purchases approved only by department
                 purchaseList = Purchase.findAllByDepartmentApprovalInList(Approval.findAllByApproved(true))
             }
         respond purchaseList, model:[purchaseCount: purchaseService.count()]
@@ -26,6 +27,15 @@ class ManagementController {
         session.filterPurchases = true
         Committee selectedCommittee = committeeService.get(params.id)
         List<User> userList = User.findAllByCommittee(selectedCommittee)
+        purchaseList = Purchase.findAllByUserInList(userList)
+        respond purchaseList, model:[purchaseCount: purchaseService.count()]
+    }
+
+    def filterByDepartment() {
+        session.filterPurchases = true
+        Department selectedDepartment = departmentService.get(params.id)
+        List<Committee> CommitteeList = Committee.findAllByDepartment(selectedDepartment)
+        List<User> userList = User.findAllByCommitteeInList(CommitteeList)
         purchaseList = Purchase.findAllByUserInList(userList)
         respond purchaseList, model:[purchaseCount: purchaseService.count()]
     }

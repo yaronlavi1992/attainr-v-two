@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!--<%@ page import="attainrvtwo.Committee" contentType="text/html;charset=UTF-8" %>-->
+<!--<%@ page import="attainrvtwo.Department" contentType="text/html;charset=UTF-8" %>-->
 <html xmlns:g="http://www.w3.org/1999/html">
 <head>
     <meta name="layout" content="main" />
@@ -12,7 +12,7 @@
     <ul>
         <!--        <li><a class="home" href="${createLink(uri: '/volunteer/index')}"><g:message code="default.home.label"/></a></li>-->
         <li><g:link class="create" action="create" controller="purchase">בקשה חדשה</g:link></li>
-        <li><g:select class="btn bg-primary" dir="rtl" id="commDDLid" name="committeeDDL" action="filterByCommittee" controller="management" from="${Committee.list()}" optionKey="id" optionValue="${name}" value="${committees}" noSelection="${['null':'לפי ועדת..']}" onchange="goToPage(this.value)"/></li>
+        <li><g:select class="btn bg-primary" dir="rtl" id="depDDLid" name="departmentDDL" action="filterByDepartment" controller="management" from="${Department.list()}" optionKey="id" optionValue="${name}" value="${departments}" noSelection="${['null':'לפי מחלקת..']}" onchange="goToPage(this.value)"/></li>
     </ul>
 </div>
 <div id="list-purchase" class="content scaffold-list" role="main">
@@ -20,7 +20,7 @@
 
     <g:if test="${session.filterPurchases}">
             <div class="mx-auto text-center" style="width: 300px;" dir="rtl">
-                <h1><b>בקשות של ועדת: ${Committee.get(params.id)}</b></h1>
+                <h1><b>בקשות של מחלקת: ${Department.get(params.id)}</b></h1>
             </div>
     </g:if>
 
@@ -35,7 +35,7 @@
 </div>
 <script type="text/javascript">
     function goToPage(requestParams) {
-    window.location.href="${'/management/filterByCommittee'}" + "/" + requestParams;
+    window.location.href="${'/management/filterByDepartment'}" + "/" + requestParams;
     }
 </script>
 </body>

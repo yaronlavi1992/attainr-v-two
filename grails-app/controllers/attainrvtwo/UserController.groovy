@@ -114,8 +114,8 @@ class UserController {
     def login() {
         def userFound = false
         User.list().each {
-            if(params.username == "${it.name}" && params.password == "${it.password}") {
-                session.user = "${it.name}"
+            if(params.username == it.name && params.password == it.password) {
+                session.user = it.name
                 session.userId = it.id
                 session.committee = (it?.committee).name
                 session.department = (it.committee).department
