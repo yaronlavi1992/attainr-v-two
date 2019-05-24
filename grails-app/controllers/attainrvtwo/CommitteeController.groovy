@@ -1,6 +1,7 @@
 package attainrvtwo
 
 import grails.validation.ValidationException
+
 import static org.springframework.http.HttpStatus.*
 
 class CommitteeController {
@@ -11,7 +12,7 @@ class CommitteeController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond committeeService.list(params), model:[committeeCount: committeeService.count()]
+        respond committeeService.list(params), model: [committeeCount: committeeService.count()]
     }
 
     def show(Long id) {
@@ -31,7 +32,7 @@ class CommitteeController {
         try {
             committeeService.save(committee)
         } catch (ValidationException e) {
-            respond committee.errors, view:'create'
+            respond committee.errors, view: 'create'
             return
         }
 
@@ -57,7 +58,7 @@ class CommitteeController {
         try {
             committeeService.save(committee)
         } catch (ValidationException e) {
-            respond committee.errors, view:'edit'
+            respond committee.errors, view: 'edit'
             return
         }
 
@@ -66,7 +67,7 @@ class CommitteeController {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'committee.label', default: 'Committee'), committee.id])
                 redirect committee
             }
-            '*'{ respond committee, [status: OK] }
+            '*' { respond committee, [status: OK] }
         }
     }
 
@@ -81,9 +82,9 @@ class CommitteeController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'committee.label', default: 'Committee'), id])
-                redirect action:"index", method:"GET"
+                redirect action: "index", method: "GET"
             }
-            '*'{ render status: NO_CONTENT }
+            '*' { render status: NO_CONTENT }
         }
     }
 
@@ -93,7 +94,7 @@ class CommitteeController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'committee.label', default: 'Committee'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*'{ render status: NOT_FOUND }
+            '*' { render status: NOT_FOUND }
         }
     }
 }

@@ -7,6 +7,6 @@ class DepartmentManagerController {
         List<User> userList = User.findAllByCommitteeInList(committeeList)
         List<Purchase> purchaseList = Purchase.findAllByUserInList(userList)
 //        purchaseList = Purchase.findAllByDepartmentApprovalInList(Approval.findAllByApproved(true))
-        respond purchaseList, model:[purchaseCount: purchaseList.size()]
+        respond purchaseList, model: [purchaseCount: purchaseList.size()]
     }
 }

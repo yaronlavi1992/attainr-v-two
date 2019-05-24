@@ -1,6 +1,7 @@
 package attainrvtwo
 
 import grails.validation.ValidationException
+
 import static org.springframework.http.HttpStatus.*
 
 class SummaryController {
@@ -11,7 +12,7 @@ class SummaryController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond summaryService.list(params), model:[summaryCount: summaryService.count()]
+        respond summaryService.list(params), model: [summaryCount: summaryService.count()]
     }
 
     def show(Long id) {
@@ -31,7 +32,7 @@ class SummaryController {
         try {
             summaryService.save(summary)
         } catch (ValidationException e) {
-            respond summary.errors, view:'create'
+            respond summary.errors, view: 'create'
             return
         }
 
@@ -57,7 +58,7 @@ class SummaryController {
         try {
             summaryService.save(summary)
         } catch (ValidationException e) {
-            respond summary.errors, view:'edit'
+            respond summary.errors, view: 'edit'
             return
         }
 
@@ -66,7 +67,7 @@ class SummaryController {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'summary.label', default: 'Summary'), summary.id])
                 redirect summary
             }
-            '*'{ respond summary, [status: OK] }
+            '*' { respond summary, [status: OK] }
         }
     }
 
@@ -81,9 +82,9 @@ class SummaryController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'summary.label', default: 'Summary'), id])
-                redirect action:"index", method:"GET"
+                redirect action: "index", method: "GET"
             }
-            '*'{ render status: NO_CONTENT }
+            '*' { render status: NO_CONTENT }
         }
     }
 
@@ -93,7 +94,7 @@ class SummaryController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'summary.label', default: 'Summary'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*'{ render status: NOT_FOUND }
+            '*' { render status: NOT_FOUND }
         }
     }
 }

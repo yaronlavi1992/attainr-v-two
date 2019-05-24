@@ -12,7 +12,7 @@ class UserController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond userService.list(params), model:[userCount: userService.count()]
+        respond userService.list(params), model: [userCount: userService.count()]
     }
 
     def show(Long id) {
@@ -32,7 +32,7 @@ class UserController {
         try {
             userService.save(user)
         } catch (ValidationException e) {
-            respond user.errors, view:'create'
+            respond user.errors, view: 'create'
             return
         }
 
@@ -58,7 +58,7 @@ class UserController {
         try {
             userService.save(user)
         } catch (ValidationException e) {
-            respond user.errors, view:'edit'
+            respond user.errors, view: 'edit'
             return
         }
 
@@ -67,7 +67,7 @@ class UserController {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), user.id])
                 redirect user
             }
-            '*'{ respond user, [status: OK] }
+            '*' { respond user, [status: OK] }
         }
     }
 
@@ -82,9 +82,9 @@ class UserController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'user.label', default: 'User'), id])
-                redirect action:"index", method:"GET"
+                redirect action: "index", method: "GET"
             }
-            '*'{ render status: NO_CONTENT }
+            '*' { render status: NO_CONTENT }
         }
     }
 
@@ -95,18 +95,18 @@ class UserController {
     }
 
     def newPurchase() {
-        if(session.permission == PermissionOf.MID && session.committee == CommitteeOf.MANAGEMENT) {
+        if (session.permission == PermissionOf.MID && session.committee == CommitteeOf.MANAGEMENT) {
             session.departmentApp = true
         }
         redirect(controller: 'purchase', action: 'create')
     }
 
     def statusDisplay() {
-        if(session.permission == PermissionOf.LOW) {
+        if (session.permission == PermissionOf.LOW) {
             redirect(controller: 'committeeManager', action: 'index')
-        } else if(session.permission == PermissionOf.MID && session.committee == CommitteeOf.MANAGEMENT) {
+        } else if (session.permission == PermissionOf.MID && session.committee == CommitteeOf.MANAGEMENT) {
             redirect(controller: 'departmentManager', action: 'index')
-        } else if(session.permission == PermissionOf.HIGH) {
+        } else if (session.permission == PermissionOf.HIGH) {
             redirect(controller: 'management', action: 'index')
         }
     }
@@ -114,7 +114,7 @@ class UserController {
     def login() {
         def userFound = false
         User.list().each {
-            if(params.username == it.name && params.password == it.password) {
+            if (params.username == it.name && params.password == it.password) {
                 session.user = it.name
                 session.userId = it.id
                 session.committee = (it?.committee).name
@@ -141,7 +141,7 @@ class UserController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*'{ render status: NOT_FOUND }
+            '*' { render status: NOT_FOUND }
         }
     }
 }

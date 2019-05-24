@@ -4,7 +4,7 @@ class DevController {
 
     PurchaseService purchaseService
 
-    def index() { }
+    def index() {}
 
     def comapp(String pidString) {
         Long pid = pidString as Long

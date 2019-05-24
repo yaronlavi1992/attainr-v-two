@@ -1,6 +1,7 @@
 package attainrvtwo
 
 import grails.validation.ValidationException
+
 import static org.springframework.http.HttpStatus.*
 
 class QuoteController {
@@ -11,7 +12,7 @@ class QuoteController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond quoteService.list(params), model:[quoteCount: quoteService.count()]
+        respond quoteService.list(params), model: [quoteCount: quoteService.count()]
     }
 
     def show(Long id) {
@@ -31,7 +32,7 @@ class QuoteController {
         try {
             quoteService.save(quote)
         } catch (ValidationException e) {
-            respond quote.errors, view:'create'
+            respond quote.errors, view: 'create'
             return
         }
 
@@ -57,7 +58,7 @@ class QuoteController {
         try {
             quoteService.save(quote)
         } catch (ValidationException e) {
-            respond quote.errors, view:'edit'
+            respond quote.errors, view: 'edit'
             return
         }
 
@@ -66,7 +67,7 @@ class QuoteController {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'quote.label', default: 'Quote'), quote.id])
                 redirect quote
             }
-            '*'{ respond quote, [status: OK] }
+            '*' { respond quote, [status: OK] }
         }
     }
 
@@ -81,9 +82,9 @@ class QuoteController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'quote.label', default: 'Quote'), id])
-                redirect action:"index", method:"GET"
+                redirect action: "index", method: "GET"
             }
-            '*'{ render status: NO_CONTENT }
+            '*' { render status: NO_CONTENT }
         }
     }
 
@@ -93,7 +94,7 @@ class QuoteController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'quote.label', default: 'Quote'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*'{ render status: NOT_FOUND }
+            '*' { render status: NOT_FOUND }
         }
     }
 }

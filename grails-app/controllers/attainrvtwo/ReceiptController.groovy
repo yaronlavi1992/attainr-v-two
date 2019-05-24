@@ -1,6 +1,7 @@
 package attainrvtwo
 
 import grails.validation.ValidationException
+
 import static org.springframework.http.HttpStatus.*
 
 class ReceiptController {
@@ -11,7 +12,7 @@ class ReceiptController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond receiptService.list(params), model:[receiptCount: receiptService.count()]
+        respond receiptService.list(params), model: [receiptCount: receiptService.count()]
     }
 
     def show(Long id) {
@@ -38,7 +39,7 @@ class ReceiptController {
         try {
             receiptService.save(receipt)
         } catch (ValidationException e) {
-            respond receipt.errors, view:'create'
+            respond receipt.errors, view: 'create'
             return
         }
 
@@ -64,7 +65,7 @@ class ReceiptController {
         try {
             receiptService.save(receipt)
         } catch (ValidationException e) {
-            respond receipt.errors, view:'edit'
+            respond receipt.errors, view: 'edit'
             return
         }
 
@@ -73,7 +74,7 @@ class ReceiptController {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'receipt.label', default: 'Receipt'), receipt.id])
                 redirect receipt
             }
-            '*'{ respond receipt, [status: OK] }
+            '*' { respond receipt, [status: OK] }
         }
     }
 
@@ -88,9 +89,9 @@ class ReceiptController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'receipt.label', default: 'Receipt'), id])
-                redirect action:"index", method:"GET"
+                redirect action: "index", method: "GET"
             }
-            '*'{ render status: NO_CONTENT }
+            '*' { render status: NO_CONTENT }
         }
     }
 
@@ -100,7 +101,7 @@ class ReceiptController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'receipt.label', default: 'Receipt'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*'{ render status: NOT_FOUND }
+            '*' { render status: NOT_FOUND }
         }
     }
 }

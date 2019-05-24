@@ -7,8 +7,8 @@ class Quote {
     Double totalPrice
     String remarks
 
-    static hasMany = [suppliers:Supplier]
-    static final belongsTo = [purchase:Purchase]
+    static hasMany = [suppliers: Supplier]
+    static final belongsTo = [purchase: Purchase]
 
     static constraints = {
         qty()

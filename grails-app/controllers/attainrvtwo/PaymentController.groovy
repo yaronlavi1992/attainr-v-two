@@ -1,6 +1,7 @@
 package attainrvtwo
 
 import grails.validation.ValidationException
+
 import static org.springframework.http.HttpStatus.*
 
 class PaymentController {
@@ -11,7 +12,7 @@ class PaymentController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond paymentService.list(params), model:[paymentCount: paymentService.count()]
+        respond paymentService.list(params), model: [paymentCount: paymentService.count()]
     }
 
     def show(Long id) {
@@ -31,7 +32,7 @@ class PaymentController {
         try {
             paymentService.save(payment)
         } catch (ValidationException e) {
-            respond payment.errors, view:'create'
+            respond payment.errors, view: 'create'
             return
         }
 
@@ -57,7 +58,7 @@ class PaymentController {
         try {
             paymentService.save(payment)
         } catch (ValidationException e) {
-            respond payment.errors, view:'edit'
+            respond payment.errors, view: 'edit'
             return
         }
 
@@ -66,7 +67,7 @@ class PaymentController {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'payment.label', default: 'Payment'), payment.id])
                 redirect payment
             }
-            '*'{ respond payment, [status: OK] }
+            '*' { respond payment, [status: OK] }
         }
     }
 
@@ -81,9 +82,9 @@ class PaymentController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'payment.label', default: 'Payment'), id])
-                redirect action:"index", method:"GET"
+                redirect action: "index", method: "GET"
             }
-            '*'{ render status: NO_CONTENT }
+            '*' { render status: NO_CONTENT }
         }
     }
 
@@ -93,7 +94,7 @@ class PaymentController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'payment.label', default: 'Payment'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*'{ render status: NOT_FOUND }
+            '*' { render status: NOT_FOUND }
         }
     }
 }

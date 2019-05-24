@@ -1,6 +1,7 @@
 package attainrvtwo
 
 import grails.validation.ValidationException
+
 import static org.springframework.http.HttpStatus.*
 
 class DepartmentController {
@@ -11,7 +12,7 @@ class DepartmentController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond departmentService.list(params), model:[departmentCount: departmentService.count()]
+        respond departmentService.list(params), model: [departmentCount: departmentService.count()]
     }
 
     def show(Long id) {
@@ -31,7 +32,7 @@ class DepartmentController {
         try {
             departmentService.save(department)
         } catch (ValidationException e) {
-            respond department.errors, view:'create'
+            respond department.errors, view: 'create'
             return
         }
 
@@ -57,7 +58,7 @@ class DepartmentController {
         try {
             departmentService.save(department)
         } catch (ValidationException e) {
-            respond department.errors, view:'edit'
+            respond department.errors, view: 'edit'
             return
         }
 
@@ -66,7 +67,7 @@ class DepartmentController {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'department.label', default: 'Department'), department.id])
                 redirect department
             }
-            '*'{ respond department, [status: OK] }
+            '*' { respond department, [status: OK] }
         }
     }
 
@@ -81,9 +82,9 @@ class DepartmentController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'department.label', default: 'Department'), id])
-                redirect action:"index", method:"GET"
+                redirect action: "index", method: "GET"
             }
-            '*'{ render status: NO_CONTENT }
+            '*' { render status: NO_CONTENT }
         }
     }
 
@@ -93,7 +94,7 @@ class DepartmentController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'department.label', default: 'Department'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*'{ render status: NOT_FOUND }
+            '*' { render status: NOT_FOUND }
         }
     }
 }

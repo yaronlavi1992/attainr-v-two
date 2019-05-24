@@ -6,7 +6,7 @@ class Supplier {
     Long phone
     String email
 
-    static belongsTo = [quote:Quote]
+    static belongsTo = [quote: Quote]
 
     static constraints = {
         phone()
