@@ -20,7 +20,12 @@ class DepartmentController {
     }
 
     def create() {
-        respond new Department(params)
+        if (session.role == RoleOf.COMMUNITY_SECRETARY) {
+            respond new Department(params)
+        } else {
+            render "permission denied"
+        }
+//        respond new Department(params)
     }
 
     def save(Department department) {

@@ -20,6 +20,7 @@ class SummaryController {
     }
 
     def create() {
+        def myFiles = new MyFile(params)
         respond new Summary(params)
     }
 

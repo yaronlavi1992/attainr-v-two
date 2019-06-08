@@ -31,6 +31,10 @@ class PurchaseController {
         respond new Purchase(params)
     }
 
+    def customCreate() {
+
+    }
+
     def save(Purchase purchase) {
         if (purchase == null) {
             notFound()

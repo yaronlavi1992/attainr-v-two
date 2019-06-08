@@ -13,8 +13,11 @@ class Purchase {
     @BindingFormat('dd-MM-yyyy')
     Date paymentDate
 
-    static hasMany = [quotes: Quote, receipts: Receipt]
+    static hasMany = [quotes: Quote, receipts: Receipt, purchaseItems: PurchaseItem]
     static belongsTo = [user: User]
+    static mapping = {
+        status defaultValue: PurchaseStatus.IN_PROGRESS
+    }
 
     static constraints = {
         description()
@@ -24,7 +27,6 @@ class Purchase {
         communityApproval(nullable: true)
         ceoApproval(nullable: true)
         paymentDate(nullable: true)
-//        user(display: false)
     }
 
     @Override

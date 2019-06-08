@@ -93,7 +93,7 @@ class BootStrap {
                 password: '1',
                 phone: '143',
                 email: 'd@blah.com',
-                role: RoleOf.DEPARTMENT_MANAGER,
+                role: RoleOf.COMMUNITY_SECRETARY,
                 permission: PermissionOf.MID,
                 committee: secretariatManagement
         ).save()
@@ -202,7 +202,7 @@ class BootStrap {
         new Purchase(user: irit, description: 'גיל הרך 2', status: PurchaseStatus.COMPLETE).save()
 
         Approval magenZea = new Approval(approved: true)
-        new Purchase(user: moshe, description: 'גיל הרך - חינוך לגיל הרך 1', status: PurchaseStatus.PURCHASED, departmentApproval: magenZea).save()
+        new Purchase(user: moshe, description: 'גיל הרך - חינוך לגיל הרך 1', status: PurchaseStatus.IN_PROGRESS, departmentApproval: magenZea).save()
 
         new Purchase(user: moshe, description: 'גיל הרך - חינוך לגיל הרך 2', status: PurchaseStatus.DENIED).save()
         new Purchase(user: nir, description: 'הנהלה 1', status: PurchaseStatus.PAYMENT_REQUIRED).save()

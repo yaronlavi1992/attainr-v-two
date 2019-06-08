@@ -1,5 +1,9 @@
 package attainrvtwo
 
+import javax.crypto.SecretKeyFactory
+import javax.crypto.spec.PBEKeySpec
+import java.security.spec.KeySpec
+
 class User {
 
     String name

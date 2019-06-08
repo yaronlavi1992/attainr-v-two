@@ -124,9 +124,12 @@ class UserController {
                 userFound = true
             }
         }
-        flash.message = userFound ? "הכניסה אושרה" : "הפרטים שהוכנסו שגויים"
-
-        redirect(action: 'index')
+        if (userFound) {
+            redirect(controller: 'committeeManager', action: 'index')
+        } else {
+            flash.message = "הפרטים שהוכנסו שגויים"
+            redirect(action: 'index')
+        }
     }
 
     def logout() {

@@ -13,7 +13,7 @@
     <ul>
         <!--        <li><a class="home" href="${createLink(uri: '/volunteer/index')}"><g:message code="default.home.label"/></a></li>-->
         <li>
-            <g:link class="create" action="create" controller="purchase">בקשה חדשה</g:link>
+            <g:link class="create bg-success text-white" action="create" controller="purchase">בקשה חדשה</g:link>
         </li>
     </ul>
 </div>
