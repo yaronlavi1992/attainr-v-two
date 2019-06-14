@@ -2,18 +2,16 @@ package attainrvtwo
 
 class Quote {
 
-    Double pricePerUnit
-    Double qty
-    Double totalPrice
-    String remarks
+    String number
+    String name
+    Double price
+
+    static hasOne = [file: MyFile]
 
     static hasMany = [suppliers: Supplier]
-    static final belongsTo = [purchase: Purchase]
+
+    static belongsTo = [purchase: Purchase]
 
     static constraints = {
-        qty()
-        pricePerUnit()
-        totalPrice(editable: false)
-        remarks(nullable: true)
     }
 }

@@ -1,6 +1,8 @@
 package attainrvtwo
 
 import grails.validation.ValidationException
+import org.springframework.util.DigestUtils
+
 import static org.springframework.http.HttpStatus.*
 
 class MyFileController {
@@ -95,5 +97,33 @@ class MyFileController {
             }
             '*'{ render status: NOT_FOUND }
         }
+    }
+
+    def showFile(Long id){
+        MyFile myFile = myFileService.get(id)
+
+        byte[] imageInByte = myFile.myFile
+
+        response.setHeader('Content-length', imageInByte.length.toString())
+
+        response.contentType = findContentType(myFile.fileName) // or the appropriate image content type
+
+        response.outputStream << imageInByte
+        response.outputStream.flush()
+
+    }
+
+    String findContentType(String name) {
+        def suffix = name.toLowerCase().replaceAll(/^.*?\.(\w+)$/, '$   1')
+        println "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! name: $name\tsuffix: $suffix"
+        switch (suffix) {
+            case 'pdf': return 'application/pdf'
+            case 'png': return 'image/png'
+        }
+
+    }
+
+    String hash(String origin) {
+        return DigestUtils.encodeAsSHA256(origin)
     }
 }

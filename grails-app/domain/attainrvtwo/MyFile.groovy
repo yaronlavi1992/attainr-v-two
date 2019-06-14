@@ -5,11 +5,11 @@ class MyFile {
     String fileName
     byte[] myFile
 
-    static belongsTo = [summary: Summary]
+    static hasMany = [quotes: Quote]
 
     static constraints = {
         fileName()
-        myFile(maxSize: 1024 * 1024 * 20)
+        myFile(maxSize: 2000000)
     }
 
     @Override

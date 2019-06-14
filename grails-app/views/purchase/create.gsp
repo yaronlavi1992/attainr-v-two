@@ -38,12 +38,12 @@
             });
         });
 
-<!--        function calculateTotalPrice() {-->
-<!--            $('table.order-list tr').each(function () {-->
-<!--                if( ( $(this).find('input[id^="packQuantity"]') ).val() != null && ( $(this).find('input[id^="packPrice"]') ).val() != null )-->
-<!--                    ( $(this).find('input[id^="totalPrice"]') ).val( ( $(this).find('input[id^="packQuantity"]') ).val() * ( $(this).find('input[id^="packPrice"]') ).val());-->
-<!--            });-->
-<!--        }-->
+        function calculateTotalPrice() {
+            $('table.order-list tr').each(function () {
+                if( ( $(this).find('input[id^="packQuantity"]') ).val() != null && ( $(this).find('input[id^="packPrice"]') ).val() != null )
+                    ( $(this).find('input[id^="totalPrice"]') ).val( ( $(this).find('input[id^="packQuantity"]') ).val() * ( $(this).find('input[id^="packPrice"]') ).val());
+            });
+        }
 
         function calculateRow(row) {
             var price = +row.find('input[name^="price"]').val();
@@ -61,7 +61,7 @@
 
 </script>
 <h1 class="title text-center">בקשת רכש חדשה</h1>
-<g:form dir="rtl" class="float-center container" resource="${this.purchase}" method="POST">
+<g:form dir="rtl" resource="${this.purchase}" controller="purchase" class="float-center container" action="save" method="POST">
     <table>
         <tr>
             <td>
@@ -84,7 +84,6 @@
         </tr>
     </table>
     <br>
-    <div class="container">
         <table name="purchaseTable" class="table order-list table-bordered">
             <thead>
             <tr>
@@ -102,7 +101,7 @@
                     <input type="textarea" name="description" class="form-control"/>
                 </td>
                 <td class="col-sm-1">
-                    <input type="number decimal" id="packQuantity" name="packQuantity" class="form-control"
+                    <input type="number" id="packQuantity" name="packQuantity" class="form-control"
                            onchange="calculateTotalPrice()"/>
                 </td>
                 <td class="col-sm-2">
@@ -132,7 +131,6 @@
             </tr>
             </tfoot>
         </table>
-    </div>
 
     <table name="freeTextTable" class="table-bordered">
         <tr>
@@ -164,7 +162,7 @@
                 <input type="text" name="firstSupplierName" class="form-control"/>
             </td>
             <td class="col-sm-1">
-                <input type="number" name="firstQuotePrice" class="form-control"/>
+                <input type="number decimal" name="firstQuotePrice" class="form-control"/>
             </td>
             <td class="col-sm-1">
                 <g:field type="file" name="firstQuoteAttachment"></g:field>
@@ -202,9 +200,8 @@
         </tbody>
     </table>
     <div class="text-center">
-        <g:submitButton name="create" class="save bg-success"
+        <g:submitButton name="create" class="save"
                         value="שלח"/>
-<!--        <input action="Create" class="bg-success" type="submit" method="POST" value="שלח">-->
     </div>
 </g:form>
 </body>

@@ -28,20 +28,20 @@
                     <div class="property-value" aria-labelledby="myFile-label">${it.fileName}</div>
                 </li>
                 <li class="fieldcontain">
-                    <span id="summary-label" class="property-label">Summary</span>
-                    <div class="property-value" aria-labelledby="summary-label"><a href="/summary/show/1">${it.summary}</a></div>
+                    <span id="myFile-label" class="property-label">Show File</span>
+                    <div class="property-value" aria-labelledby="summary-label" ><g:link class="show" action="showFile" id="${it.id}" target="_blank">${it.fileName}</g:link></div>
                 </li>
             </g:each>
                 </ol>
             </div>
 
-<!--            <f:display bean="myFile" />-->
             <g:form resource="${this.myFile}" method="DELETE">
                 <fieldset class="buttons">
                     <g:link class="edit" action="edit" resource="${this.myFile}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
                     <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
                 </fieldset>
             </g:form>
+
         </div>
     </body>
 </html>

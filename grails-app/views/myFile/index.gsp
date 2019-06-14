@@ -18,7 +18,6 @@
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
-<!--            <f:table collection="${myFileList}" />-->
 
             <table class='display'>
                 <tr>
@@ -29,7 +28,6 @@
                 <g:each in="${myFileList}">
                     <tr>
                         <td><g:link action="show" id="${it.id}">${it.fileName}</g:link></td>
-                        <td>${it.summary}</td>
                     </tr>
                 </g:each>
             </table>
