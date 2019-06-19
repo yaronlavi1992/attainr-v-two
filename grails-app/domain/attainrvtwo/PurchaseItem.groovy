@@ -11,5 +11,6 @@ class PurchaseItem {
     static belongsTo = [purchase: Purchase]
 
     static constraints = {
+        externalFunding(nullable: true)
     }
 }

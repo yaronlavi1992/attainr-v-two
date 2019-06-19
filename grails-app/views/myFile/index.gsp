@@ -27,7 +27,7 @@
 
                 <g:each in="${myFileList}">
                     <tr>
-                        <td><g:link action="show" id="${it.id}">${it.fileName}</g:link></td>
+                        <td><g:link action="showFile" id="${it.id}" target="_blank">${it.fileName}</g:link></td>
                     </tr>
                 </g:each>
             </table>

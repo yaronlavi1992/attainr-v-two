@@ -8,6 +8,7 @@ class PurchaseController {
 
     PurchaseService purchaseService
     UserService userService
+    ReceiptService receiptService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -17,15 +18,8 @@ class PurchaseController {
     }
 
     def show(Long id) {
-        if (session.role == RoleOf.DEPARTMENT_MANAGER && session.departmentApp) {
-            Purchase purchase = purchaseService.get(id)
-            Approval departmentApp = new Approval()
-            departmentApp.approved = true
-            purchase.departmentApproval = departmentApp
-            purchaseService.save(purchase)
-            session.departmentApp = false
-        }
-        respond purchaseService.get(id)
+        Purchase purchase = purchaseService.get(id)
+        respond purchase
     }
 
     def create() {
@@ -34,18 +28,26 @@ class PurchaseController {
 
 
     def save(Purchase purchase) {
+        //if the user that created a new purchase is a department manager, the purchase is approved by default(departmentApprocal)
+        if (session.permission == PermissionOf.MID && session.committee == CommitteeOf.MANAGEMENT) {
+            Approval departmentApp = new Approval()
+            departmentApp.approved = true
+            purchase.departmentApproval = departmentApp
+        }
 
         //set miscellaneous purchase properties
+        purchase.name = params.purchaseName
         purchase.user = userService.get(session.userId)
         purchase.status = PurchaseStatus.IN_PROGRESS
         purchase.paymentDate = params.orderDate as Date
         purchase.description = params.freeText
+        purchase.totalPurchasePrice = params.totalPurchasePrice as Double
 
         //extract first item
         String desc = params.description
-        Integer quantity = params.packQuantity
+        Integer quantity = params.packQuantity as Integer
         Double price = params.packPrice as Double
-        Double externalFunding = params.externalFunding
+        Double externalFunding = params.externalFunding as Double
         Double totalPrice = params.totalPrice as Double
 
 
@@ -60,6 +62,7 @@ class PurchaseController {
         while (desc) { // if not present in form - break the loop
             //build item and add to list
             PurchaseItem item = buildPurchaseItem(purchase, desc, quantity, price, externalFunding, totalPrice)
+            item.save()
             items.add(item)
 
             // get next line args (if any)
@@ -69,11 +72,11 @@ class PurchaseController {
             externalFundingKey = "externalFunding$i"
             totalPriceKey = "totalPrice$i"
 
-            desc = params.descKey
-            quantity = params.quantityKey
-            price = params.packPriceKey
-            externalFunding = params.externalFundingKey
-            totalPrice = params.totalPriceKey
+            desc = params.get(descKey)
+            quantity = params.get(quantityKey) as Integer
+            price = params.get(packPriceKey) as Double
+            externalFunding = params.get(externalFundingKey) as Double
+            totalPrice = params.get(totalPriceKey) as Double
             i++
         }
         purchase.purchaseItems = items
@@ -82,12 +85,11 @@ class PurchaseController {
         ['first', 'second', 'third'].each {prefix ->
             Quote q = readQuote(purchase, params, prefix)
             if (q) {
-                q.save(flush: true)
+                q.save()
                 quoteList.add(q)
             }
         }
         purchase.quotes = quoteList
-
 
         if (purchase == null) {
             notFound()
@@ -129,8 +131,8 @@ class PurchaseController {
 
             file = new MyFile(params)
             file.fileName = name
-            file.myFile = params.get(fileKey) as byte[]
-            file.save(flush: true)
+            file.myFile = (params.get(fileKey)).getBytes()
+            file.save()
         }
 
         if (num) {
@@ -147,15 +149,61 @@ class PurchaseController {
     }
 
     def PurchaseItem buildPurchaseItem(purchase, String description, Integer quantity, Double price, Double externalFund, Double totalPrice) {
-        def item = new PurchaseItem()
-        item.purchase = purchase
+        PurchaseItem item = new PurchaseItem()
         item.description = description
         item.packQuantity = quantity
         item.packPrice = price
         item.externalFunding = externalFund
         item.totalItemPrice = totalPrice
+        item.purchase = purchase
         return item
     }
+
+    def addReceipt(Long id) {
+        Purchase purchase = purchaseService.get(id)
+        Receipt receipt = createReceipt(purchase)
+        purchase.receipt = receipt
+        purchaseService.save(purchase)
+    }
+
+    def Receipt createReceipt(Purchase purchase) {
+        Receipt receipt = new Receipt()
+
+        String sumKey = "${sum}"
+        receipt.sum = params.get(sumKey) as Double
+
+        String fileNameKey = "${fileName}"
+        MyFile file = new MyFile(params)
+        file.fileName = params.get(fileNameKey)
+        String fileKey = "${myFile}"
+        file.myFile = (params.get(fileKey)).getBytes()
+        file.save()
+
+        receipt.purchase = purchase
+        return receipt
+    }
+
+
+
+
+//    def addReceipt(Purchase purchase) {
+//        Receipt receipt = new Receipt(params)
+//        String nameKey = params.fileName
+//        String fileKey = params.myFile
+//        String sumKey = params.sum
+//        String name = params.get(nameKey)
+//        Double sum = params.get(sumKey) as Double
+//        MyFile file = new MyFile(params)
+//        file.fileName = name
+//        file.myFile = (params.get(fileKey)).getBytes()
+//        file.save()
+//        receipt.sum = sum
+//        receipt.purchase = purchase
+//        receipt.save()
+//        purchase.receipt = receipt
+//        purchaseService.save(purchase)
+//        redirect(controller: "Purchase", action: "show")
+//    }
 
     def edit(Long id) {
         respond purchaseService.get(id)

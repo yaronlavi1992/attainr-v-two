@@ -24,12 +24,12 @@
                 <ol class="property-list myFile">
                 <g:each in="${myFile}">
                 <li class="fieldcontain">
-                    <span id="myFile-label" class="property-label">File Name</span>
+                    <span class="property-label">File Name</span>
                     <div class="property-value" aria-labelledby="myFile-label">${it.fileName}</div>
                 </li>
                 <li class="fieldcontain">
-                    <span id="myFile-label" class="property-label">Show File</span>
-                    <div class="property-value" aria-labelledby="summary-label" ><g:link class="show" action="showFile" id="${it.id}" target="_blank">${it.fileName}</g:link></div>
+                    <span class="property-label">Show File</span>
+                    <div class="property-value"><g:link class="show" action="showFile" id="${it.id}" target="_blank">${it.fileName}</g:link></div>
                 </li>
             </g:each>
                 </ol>

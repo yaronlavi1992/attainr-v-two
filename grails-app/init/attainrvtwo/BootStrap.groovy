@@ -189,24 +189,29 @@ class BootStrap {
                 committee: managementCommittee
         ).save()
 
-        Quote q1 = new Quote(pricePerUnit: 20, qty: 5, totalPrice: 5100)
-        Quote q2 = new Quote(pricePerUnit: 30, qty: 5, totalPrice: 150)
-        Quote q3 = new Quote(pricePerUnit: 40, qty: 5, totalPrice: 200)
-        Approval kadureiKadursal = new Approval(approved: true)
-        new Purchase(user: zuchmir, description: 'פנאי וקהילה - חיילים', status: PurchaseStatus.IN_PROGRESS, departmentApproval: kadureiKadursal,
-                accountantApproval: kadureiKadursal, quotes: [q1, q2, q3]).save()
-
         Approval kadurRogby = new Approval(approved: false)
-        new Purchase(user: irit, description: 'גיל הרך 1', status: PurchaseStatus.IN_PROGRESS, departmentApproval: kadurRogby).save()
+        new Purchase(totalPurchasePrice: 0, name: "מוצצים",user: irit, description: 'גיל הרך 1', status: PurchaseStatus.IN_PROGRESS, departmentApproval: kadurRogby).save()
 
-        new Purchase(user: irit, description: 'גיל הרך 2', status: PurchaseStatus.COMPLETE).save()
+        new Purchase(totalPurchasePrice: 0, name: "חיתולים", user: irit, description: 'גיל הרך 2', status: PurchaseStatus.COMPLETE).save()
 
         Approval magenZea = new Approval(approved: true)
-        new Purchase(user: moshe, description: 'גיל הרך - חינוך לגיל הרך 1', status: PurchaseStatus.IN_PROGRESS, departmentApproval: magenZea).save()
+        new Purchase(totalPurchasePrice: 0, name: "עגלות", user: moshe, description: 'גיל הרך - חינוך לגיל הרך 1', status: PurchaseStatus.IN_PROGRESS, departmentApproval: magenZea).save()
 
-        new Purchase(user: moshe, description: 'גיל הרך - חינוך לגיל הרך 2', status: PurchaseStatus.DENIED).save()
-        new Purchase(user: nir, description: 'הנהלה 1', status: PurchaseStatus.PAYMENT_REQUIRED).save()
-        new Purchase(user: yaron, description: 'הנהלה 2', status: PurchaseStatus.APPROVED).save()
+        new Purchase(totalPurchasePrice: 0, name: "מוביילים", user: moshe, description: 'גיל הרך - חינוך לגיל הרך 2', status: PurchaseStatus.DENIED).save()
+        new Purchase(totalPurchasePrice: 0, name: "כיסאות מנהל", user: nir, description: 'הנהלה 1', status: PurchaseStatus.PAYMENT_REQUIRED).save()
+        new Purchase(totalPurchasePrice: 0, name: "לוחות מחיקים", user: yaron, description: 'הנהלה 2', status: PurchaseStatus.APPROVED).save()
+
+
+        //example of purchased status(3 approvals and PURCHASED status)
+        MyFile f1 = new MyFile(fileName: "אבי", myFile: [0, 0, 0, 0, 0] as byte[]).save()
+
+        PurchaseItem purchasedItemExample = new PurchaseItem(description: "אאא", packQuantity: 3, packPrice: 47).save()
+        Approval leisure_and_communityApp = new Approval(approved: true)
+        Approval accountantApp = new Approval(approved: true)
+        Approval communityManagerApp = new Approval(approved: true)
+        Purchase purchasedExample = new Purchase(totalPurchasePrice: 0, name: "דוגמא נרכש", user: karin, description: 'הנהלה 2', status: PurchaseStatus.PURCHASED,
+                departmentApproval: leisure_and_communityApp, accountantApproval: accountantApp, communityApproval: communityManagerApp).save()
+        Quote q1 = new Quote(number: 1, name: "אבי", price: 45, file: f1, purchase: purchasedExample).save()
 
     }
     def destroy = {

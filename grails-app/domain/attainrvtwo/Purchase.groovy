@@ -4,8 +4,10 @@ import grails.databinding.BindingFormat
 
 class Purchase {
 
+    String name
     String description
     PurchaseStatus status
+    Double totalPurchasePrice
     Approval departmentApproval
     Approval accountantApproval
     Approval communityApproval
@@ -20,7 +22,8 @@ class Purchase {
     }
 
     static constraints = {
-        description()
+        name()
+        description(nullable: true)
         status()
         departmentApproval(nullable: true)
         accountantApproval(nullable: true)

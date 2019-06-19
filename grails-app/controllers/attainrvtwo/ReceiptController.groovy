@@ -7,6 +7,7 @@ import static org.springframework.http.HttpStatus.*
 class ReceiptController {
 
     ReceiptService receiptService
+    PurchaseService purchaseService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -23,14 +24,8 @@ class ReceiptController {
         respond new Receipt(params)
     }
 
-//
-//    def save = {
-//        printin request.getFile("uploadedFile").inputStream.text
-//        def downloadedfile = request.getFile('uploadedFile')
-//        downloadedfile.transferTo(new File('c:\\Users\\yawik\\Downloads\\Capture.PNG'))
-//    }
-
     def save(Receipt receipt) {
+
         if (receipt == null) {
             notFound()
             return

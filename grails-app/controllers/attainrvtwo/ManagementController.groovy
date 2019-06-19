@@ -72,9 +72,7 @@ class ManagementController {
             case PurchaseStatus.IN_PROGRESS:
                 if (purchaseInstance.ceoApproval?.approved) { // ceo approved
                     purchaseInstance.status = PurchaseStatus.APPROVED
-                } else if (purchaseInstance.communityApproval?.approved && purchaseInstance.quotes?.asList().every {
-                    it.totalPrice < 5000
-                }) { // community manager approved and all quotes below 5000 ILS
+                } else if (purchaseInstance.communityApproval?.approved && purchaseInstance.totalPurchasePrice < 5000) { // community manager approved and all quotes below 5000 ILS -> community manager approved
                     purchaseInstance.status = PurchaseStatus.APPROVED
                 }
             case PurchaseStatus.APPROVED:

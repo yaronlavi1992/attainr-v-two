@@ -94,13 +94,6 @@ class UserController {
     def changePassword() {
     }
 
-    def newPurchase() {
-        if (session.permission == PermissionOf.MID && session.committee == CommitteeOf.MANAGEMENT) {
-            session.departmentApp = true
-        }
-        redirect(controller: 'purchase', action: 'create')
-    }
-
     def statusDisplay() {
         if (session.permission == PermissionOf.LOW) {
             redirect(controller: 'committeeManager', action: 'index')
@@ -125,7 +118,7 @@ class UserController {
             }
         }
         if (userFound) {
-            redirect(controller: 'committeeManager', action: 'index')
+            statusDisplay()
         } else {
             flash.message = "הפרטים שהוכנסו שגויים"
             redirect(action: 'index')

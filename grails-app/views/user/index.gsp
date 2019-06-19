@@ -29,7 +29,7 @@
 <g:if test="${session.user}">
     <br/>
     <div class="mx-auto text-center" style="width: 300px;" dir="rtl">
-        <g:link action="newPurchase">
+        <g:link action="create" controller="purchase">
             <input class="btn bg-success" type="button" value="בקשה חדשה">
         </g:link>
         <g:link action="statusDisplay">
