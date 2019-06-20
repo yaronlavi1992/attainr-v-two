@@ -43,7 +43,7 @@ class ManagementController {
 
     def choice(Long id) {
         Purchase purchase = purchaseService.get(id)
-        if ((params.isPurchased)?.toBoolean()) {
+        if ((params.isPurchased).toBoolean()) {
             // skip to statusUpdate
         } else if (session.role == RoleOf.COMMUNITY_CEO) {
             Approval ceoApp = new Approval()
@@ -59,12 +59,12 @@ class ManagementController {
             purchase.accountantApproval = accountantApp
         } else if (session.role == RoleOf.DEPARTMENT_MANAGER) {
             Approval committeeApp = new Approval()
-            committeeApp.approved = (params.choice).toBoolean() ? true : false
+            committeeApp.approved = (params.choice)?.toBoolean() ? true : false
             purchase.departmentApproval = committeeApp
         }
         purchaseService.save(purchase)
         statusUpdate(purchase)
-        redirect(controller: "Purchase", action: "index")
+        redirect(controller: "user", action: "statusDisplay")
     }
 
     def statusUpdate(Purchase purchaseInstance) {
@@ -72,16 +72,33 @@ class ManagementController {
             case PurchaseStatus.IN_PROGRESS:
                 if (purchaseInstance.ceoApproval?.approved) { // ceo approved
                     purchaseInstance.status = PurchaseStatus.APPROVED
-                } else if (purchaseInstance.communityApproval?.approved && purchaseInstance.totalPurchasePrice < 5000) { // community manager approved and all quotes below 5000 ILS -> community manager approved
+                } else if (purchaseInstance.communityApproval?.approved && purchaseInstance.totalPurchasePrice < 5000) {
+                    // community manager approved and all quotes below 5000 ILS -> community manager approved
                     purchaseInstance.status = PurchaseStatus.APPROVED
                 }
+                break
             case PurchaseStatus.APPROVED:
                 if ((params.isPurchased)?.toBoolean()) {
                     purchaseInstance.status = PurchaseStatus.PURCHASED
                     params.isPurchased = false
                 }
+                break
+            case PurchaseStatus.PAYMENT_REQUIRED:
+                if (session.role == RoleOf.COMMUNITY_ACCOUNTANT) {
+                    purchaseInstance.status = PurchaseStatus.COMPLETE
+                }
+                break
         //TODO: add other cases such as 'payment received', 'purchase complete' etc.
         }
         purchaseService.save(purchaseInstance)
+    }
+
+    def statusComplete(Long id) {
+        Purchase purchase = purchaseService.get(id)
+        if (session.role == RoleOf.COMMUNITY_ACCOUNTANT) {
+            purchase.status = PurchaseStatus.COMPLETE
+        }
+        purchaseService.save(purchase)
+        redirect(controller: "user", action: "statusDisplay")
     }
 }

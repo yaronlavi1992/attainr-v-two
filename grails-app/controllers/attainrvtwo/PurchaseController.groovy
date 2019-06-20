@@ -161,28 +161,36 @@ class PurchaseController {
 
     def addReceipt(Long id) {
         Purchase purchase = purchaseService.get(id)
-        Receipt receipt = createReceipt(purchase)
-        purchase.receipt = receipt
+        List<Receipt> receiptList = []
+        Receipt r = createReceipt(purchase, params)
+        r.save()
+        receiptList.add(r)
+        purchase.receipts = receiptList
+        purchase.status = PurchaseStatus.PAYMENT_REQUIRED
         purchaseService.save(purchase)
+        redirect(controller: "Purchase", action: "show", id: purchase.id)
     }
 
-    def Receipt createReceipt(Purchase purchase) {
+    def Receipt createReceipt(purchase, params) {
         Receipt receipt = new Receipt()
 
-        String sumKey = "${sum}"
+        String sumKey = "sum"
         receipt.sum = params.get(sumKey) as Double
 
-        String fileNameKey = "${fileName}"
         MyFile file = new MyFile(params)
-        file.fileName = params.get(fileNameKey)
-        String fileKey = "${myFile}"
+        file.fileName = params.fileName
+        String fileKey = "myFile"
         file.myFile = (params.get(fileKey)).getBytes()
         file.save()
+        receipt.file = file
 
         receipt.purchase = purchase
         return receipt
     }
 
+    def attachReceipt(Long id) {
+        respond purchaseService.get(id)
+    }
 
 
 

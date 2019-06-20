@@ -131,6 +131,11 @@ class UserController {
         redirect(action: 'index')
     }
 
+    def showUsers(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        respond userService.list(params), model: [userCount: userService.count()]
+    }
+
     protected void notFound() {
         request.withFormat {
             form multipartForm {

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <!--<%@ page import="attainrvtwo.PermissionOf" contentType="text/html;charset=UTF-8" %>-->
 <!--<%@ page import="attainrvtwo.PurchaseStatus" contentType="text/html;charset=UTF-8" %>-->
+<!--<%@ page import="attainrvtwo.RoleOf" contentType="text/html;charset=UTF-8" %>-->
 <html>
 <head>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -63,11 +64,6 @@
         }
 
 
-
-
-
-
-
 </script>
 <br>
 <a href="#show-purchase" class="skip" tabindex="-1">
@@ -109,7 +105,22 @@
         </g:if>
         <g:if test="${this.purchase.get(params.id).status == PurchaseStatus.PURCHASED}">
             <li>
-                <g:link class="btn bg-success" params="[id: params.id]" name="addReceipt" action="edit">הוסף קבלה
+                <g:link class="btn bg-success" params="[id: params.id]" name="addReceipt" action="attachReceipt">הוסף
+                    קבלה
+                </g:link>
+            </li>
+        </g:if>
+        <g:if test="${this.purchase.get(params.id).status == PurchaseStatus.PAYMENT_REQUIRED}">
+            <li>
+                <g:link class="btn bg-primary" controller="myFile" action="showFile"
+                        id="${purchase?.receipts[0]?.file?.id}"
+                        name="showReceipt">הצג קבלה
+                </g:link>
+            </li>
+        </g:if>
+        <g:if test="${this.purchase.get(params.id).status == PurchaseStatus.PAYMENT_REQUIRED && session.role == RoleOf.COMMUNITY_ACCOUNTANT}">
+            <li>
+                <g:link class="btn bg-primary" controller="management" action="statusComplete" id="${params.id}" name="showReceipt">סיים בקשה
                 </g:link>
             </li>
         </g:if>
@@ -241,7 +252,7 @@
                        value="${purchase.quotes[0]?.price}" readonly="readonly"/>
             </td>
             <td class="col-sm-1">
-                <g:link controller="myFile" action="showFile" id="${purchase?.quotes[0]?.file.id}"
+                <g:link controller="myFile" action="showFile" id="${purchase?.quotes[0]?.file?.id}"
                         name="firstQuoteAttachment" disabled="true">${purchase?.quotes[0]?.name}
                 </g:link>
             </td>
