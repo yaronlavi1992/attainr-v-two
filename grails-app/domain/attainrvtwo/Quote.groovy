@@ -8,8 +8,6 @@ class Quote {
 
     static hasOne = [file: MyFile]
 
-    static hasMany = [suppliers: Supplier]
-
     static belongsTo = [purchase: Purchase]
 
     static constraints = {

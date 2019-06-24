@@ -90,6 +90,7 @@ class PurchaseController {
             }
         }
         purchase.quotes = quoteList
+        purchase.quotes.sort{it.number}
 
         if (purchase == null) {
             notFound()

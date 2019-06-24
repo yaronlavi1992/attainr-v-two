@@ -2,7 +2,7 @@
 <html xmlns:g="http://www.w3.org/1999/html">
 <head>
     <meta name="layout" content="main"/>
-    <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}"/>
+    <g:set var="entityName" value="${message(code: 'user.label', default: 'Purchase')}"/>
     <title>מנהל ועדה</title>
 </head>
 <body>

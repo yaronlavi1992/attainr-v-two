@@ -3,7 +3,7 @@
 <html xmlns:g="http://www.w3.org/1999/html">
 <head>
     <meta name="layout" content="main"/>
-    <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}"/>
+    <g:set var="entityName" value="${message(code: 'user.label', default: 'Purchase')}"/>
     <title>מנהל מחלקה</title>
 </head>
 <body>
@@ -11,8 +11,11 @@
     <g:message code="default.link.skip.label" default="Skip to content&hellip;"/>
 </a>
 <div class="nav container" role="navigation">
-    <g:if test="${session.role == RoleOf.COMMUNITY_SECRETARY}">
-        <ul>
+    <ul>
+        <li>
+            <g:link class="create bg-success text-white" action="create" controller="purchase">בקשה חדשה</g:link>
+        </li>
+        <g:if test="${session.role == RoleOf.COMMUNITY_SECRETARY}">
             <li>
                 <g:link class="create btn bg-success" name="addUser" action="create" controller="user">הוסף משתמש
                 </g:link>
@@ -27,14 +30,14 @@
                     מחלקה
                 </g:link>
             </li>
-        </ul>
-        <ul>
-            <li>
-                <g:link class="list btn bg-primary" name="showUsers" action="showUsers" controller="user">הצג משתמשים
-                </g:link>
-            </li>
-        </ul>
-    </g:if>
+    </ul>
+    <ul>
+        <li>
+            <g:link class="list btn bg-primary" name="showUsers" action="showUsers" controller="user">הצג משתמשים
+            </g:link>
+        </li>
+        </g:if>
+    </ul>
 </div>
 <div id="list-purchase" class="content scaffold-list" role="main">
     <h1>

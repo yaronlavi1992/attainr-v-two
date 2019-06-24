@@ -11,12 +11,15 @@ class ManagementController {
         params.max = Math.min(max ?: 10, 100)
         if (session.role == RoleOf.COMMUNITY_CEO) { // shows purchases approved by all except ceo
             purchaseList = Purchase.findAllByCommunityApprovalInList(Approval.findAllByApproved(true))
-        } else if (session.role == RoleOf.COMMUNITY_MANAGER) {
-            // shows purchases approved by both department and accountant
+            purchaseList = purchaseList.findAll{it.ceoApproval?.approved != true}
+        } else if (session.role == RoleOf.COMMUNITY_MANAGER) { // shows purchases approved by both department and accountant
             purchaseList = Purchase.findAllByAccountantApprovalInList(Approval.findAllByApproved(true))
+            purchaseList = purchaseList.findAll{it.communityApproval?.approved != true}
         } else if (session.role == RoleOf.COMMUNITY_ACCOUNTANT) { // shows purchases approved only by department
             purchaseList = Purchase.findAllByDepartmentApprovalInList(Approval.findAllByApproved(true))
+            purchaseList = purchaseList.findAll{it.accountantApproval?.approved != true}
         }
+        purchaseList = purchaseList.findAll{it.status != PurchaseStatus.COMPLETE}
         respond purchaseList, model: [purchaseCount: purchaseService.count()]
     }
 
@@ -43,9 +46,7 @@ class ManagementController {
 
     def choice(Long id) {
         Purchase purchase = purchaseService.get(id)
-        if ((params.isPurchased).toBoolean()) {
-            // skip to statusUpdate
-        } else if (session.role == RoleOf.COMMUNITY_CEO) {
+        if (session.role == RoleOf.COMMUNITY_CEO) {
             Approval ceoApp = new Approval()
             ceoApp.approved = (params.choice).toBoolean() ? true : false
             purchase.ceoApproval = ceoApp
@@ -63,6 +64,12 @@ class ManagementController {
             purchase.departmentApproval = committeeApp
         }
         purchaseService.save(purchase)
+        statusUpdate(purchase)
+        redirect(controller: "user", action: "statusDisplay")
+    }
+
+    def alreadyPurchased(Long id) {
+        Purchase purchase = purchaseService.get(id)
         statusUpdate(purchase)
         redirect(controller: "user", action: "statusDisplay")
     }

@@ -98,7 +98,7 @@
         </g:if>
         <g:if test="${this.purchase.get(params.id).status == PurchaseStatus.APPROVED}">
             <li>
-                <g:link class="btn bg-success" name="isPurchased" action="choice" controller="management"
+                <g:link class="btn bg-success" name="isPurchased" action="alreadyPurchased" controller="management"
                         params="[id: params.id, isPurchased: true]">נרכש
                 </g:link>
             </li>
@@ -244,16 +244,16 @@
                        readonly="readonly"/>
             </td>
             <td class="col-sm-1">
-                <input type="text" name="firstSupplierName" class="form-control" value="${purchase.quotes[0]?.name}"
+                <input type="text" name="firstSupplierName" class="form-control" value="${((purchase.quotes).sort{it.number}).sort{it.number}[0]?.name}"
                        readonly="readonly"/>
             </td>
             <td class="col-sm-1">
                 <input type="number decimal" name="firstQuotePrice" class="form-control"
-                       value="${purchase.quotes[0]?.price}" readonly="readonly"/>
+                       value="${(purchase.quotes).sort{it.number}[0]?.price}" readonly="readonly"/>
             </td>
             <td class="col-sm-1">
-                <g:link controller="myFile" action="showFile" id="${purchase?.quotes[0]?.file?.id}"
-                        name="firstQuoteAttachment" disabled="true">${purchase?.quotes[0]?.name}
+                <g:link controller="myFile" action="showFile" id="${(purchase?.quotes).sort{it.number}[0]?.file?.id}"
+                        name="firstQuoteAttachment" disabled="true">${(purchase?.quotes).sort{it.number}[0]?.name}
                 </g:link>
             </td>
         </tr>
@@ -263,16 +263,16 @@
                        readonly="readonly"/>
             </td>
             <td class="col-sm-1">
-                <input type="text" name="secondSupplierName" class="form-control" value="${purchase.quotes[1]?.name}"
+                <input type="text" name="secondSupplierName" class="form-control" value="${(purchase.quotes).sort{it.number}[1]?.name}"
                        readonly="readonly"/>
             </td>
             <td class="col-sm-1">
-                <input type="number" name="secondQuotePrice" class="form-control" value="${purchase.quotes[1]?.price}"
+                <input type="number" name="secondQuotePrice" class="form-control" value="${(purchase.quotes).sort{it.number}[1]?.price}"
                        readonly="readonly"/>
             </td>
             <td class="col-sm-1">
-                <g:link controller="myFile" action="showFile" id="${purchase?.quotes[1]?.file?.id}"
-                        name="secondQuoteAttachment" disabled="true">${purchase?.quotes[1]?.name}
+                <g:link controller="myFile" action="showFile" id="${(purchase?.quotes).sort{it.number}[1]?.file?.id}"
+                        name="secondQuoteAttachment" disabled="true">${(purchase?.quotes).sort{it.number}[1]?.name}
                 </g:link>
             </td>
         </tr>
@@ -282,16 +282,16 @@
                        readonly="readonly"/>
             </td>
             <td class="col-sm-1">
-                <input type="text" name="thirdSupplierName" class="form-control" value="${purchase.quotes[2]?.name}"
+                <input type="text" name="thirdSupplierName" class="form-control" value="${(purchase.quotes).sort{it.number}[2]?.name}"
                        readonly="readonly"/>
             </td>
             <td class="col-sm-1">
-                <input type="number" name="thirdQuotePrice" class="form-control" value="${purchase.quotes[2]?.price}"
+                <input type="number" name="thirdQuotePrice" class="form-control" value="${(purchase.quotes).sort{it.number}[2]?.price}"
                        readonly="readonly"/>
             </td>
             <td class="col-sm-1">
-                <g:link controller="myFile" action="showFile" id="${purchase?.quotes[2]?.file?.id}"
-                        name="thirdQuoteAttachment" disabled="true">${purchase?.quotes[2]?.name}
+                <g:link controller="myFile" action="showFile" id="${(purchase?.quotes).sort{it.number}[2]?.file?.id}"
+                        name="thirdQuoteAttachment" disabled="true">${(purchase?.quotes).sort{it.number}[2]?.name}
                 </g:link>
             </td>
         </tr>
