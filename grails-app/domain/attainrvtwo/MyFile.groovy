@@ -5,7 +5,7 @@ class MyFile {
     String fileName
     byte[] myFile
 
-    static hasMany = [quotes: Quote, receipts: Receipt]
+    static hasMany = [quotes: Quote, receipts: Receipt, summaries: Summary]
 
     static constraints = {
         fileName()

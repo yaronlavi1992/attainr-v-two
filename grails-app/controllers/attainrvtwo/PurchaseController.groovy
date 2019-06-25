@@ -8,7 +8,6 @@ class PurchaseController {
 
     PurchaseService purchaseService
     UserService userService
-    ReceiptService receiptService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -193,26 +192,21 @@ class PurchaseController {
         respond purchaseService.get(id)
     }
 
-
-
-//    def addReceipt(Purchase purchase) {
-//        Receipt receipt = new Receipt(params)
-//        String nameKey = params.fileName
-//        String fileKey = params.myFile
-//        String sumKey = params.sum
-//        String name = params.get(nameKey)
-//        Double sum = params.get(sumKey) as Double
-//        MyFile file = new MyFile(params)
-//        file.fileName = name
-//        file.myFile = (params.get(fileKey)).getBytes()
-//        file.save()
-//        receipt.sum = sum
-//        receipt.purchase = purchase
-//        receipt.save()
-//        purchase.receipt = receipt
-//        purchaseService.save(purchase)
-//        redirect(controller: "Purchase", action: "show")
-//    }
+    def showCompletedPurchases(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        List<Purchase> purchaseList = purchaseService.list()
+        if (session.role == RoleOf.COMMITTEE_MANAGER) {
+            Committee committee = Committee.findByName(session.committee)
+            List<User> userList = User.findAllByCommittee(committee)
+            purchaseList = Purchase.findAllByUserInList(userList)
+        } else if (session.role == RoleOf.DEPARTMENT_MANAGER) {
+            List<Committee> committeeList = Committee.findAllByDepartment(session.department)
+            List<User> userList = User.findAllByCommitteeInList(committeeList)
+            purchaseList = Purchase.findAllByUserInList(userList)
+        }
+        purchaseList = purchaseList.findAll{it.status == PurchaseStatus.COMPLETE}
+        respond purchaseList, model: [purchaseCount: purchaseService.count()]
+    }
 
     def edit(Long id) {
         respond purchaseService.get(id)

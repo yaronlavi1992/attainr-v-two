@@ -17,7 +17,7 @@
             <g:link class="create" action="create" controller="purchase">בקשה חדשה</g:link>
         </li>
         <li>
-            <g:select class="btn bg-primary" dir="rtl" id="commDDLid" name="committeeDDL" action="filterByCommittee"
+            <g:select class="btn bg-info" dir="rtl" id="commDDLid" name="committeeDDL" action="filterByCommittee"
                       controller="management" from="${Committee.list()}" optionKey="id" optionValue="${name}"
                       value="${committees}" noSelection="${['null':'לפי ועדת..']}" onchange="goToPage(this.value)"/>
         </li>
@@ -47,6 +47,8 @@
     function goToPage(requestParams) {
     window.location.href="${'/management/filterByCommittee'}" + "/" + requestParams;
     }
+
+
 
 </script>
 </body>

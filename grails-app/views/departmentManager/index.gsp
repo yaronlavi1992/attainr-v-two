@@ -15,6 +15,12 @@
         <li>
             <g:link class="create bg-success text-white" action="create" controller="purchase">בקשה חדשה</g:link>
         </li>
+        <li>
+            <g:link class="create bg-info text-white" action="showCompletedPurchases" controller="purchase">בקשות שהושלמו</g:link>
+        </li>
+        <li>
+            <g:link class="create bg-info text-white" action="index" controller="summary">סיכומי ישיבות</g:link>
+        </li>
         <g:if test="${session.role == RoleOf.COMMUNITY_SECRETARY}">
             <li>
                 <g:link class="create btn bg-success" name="addUser" action="create" controller="user">הוסף משתמש
@@ -30,12 +36,10 @@
                     מחלקה
                 </g:link>
             </li>
-    </ul>
-    <ul>
-        <li>
-            <g:link class="list btn bg-primary" name="showUsers" action="showUsers" controller="user">הצג משתמשים
-            </g:link>
-        </li>
+            <li>
+                <g:link class="list btn bg-info" name="showUsers" action="showUsers" controller="user">הצג משתמשים
+                </g:link>
+            </li>
         </g:if>
     </ul>
 </div>

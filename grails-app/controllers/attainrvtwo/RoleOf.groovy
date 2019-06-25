@@ -9,6 +9,7 @@ enum RoleOf {
     DEPARTMENT_MANAGER("מנהל מחלקה"),
     COMMITTEE_MANAGER("מנהל ועדה"),
     COMMUNITY_SECRETARY("מזכירת הקהילה")
+//    CULTURE_AND_SECURITY_CEO("מנהל כללי לתרבות ובטחון")
     String roleLiteral
 
     RoleOf(String value) {

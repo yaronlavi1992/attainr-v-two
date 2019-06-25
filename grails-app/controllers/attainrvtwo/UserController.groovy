@@ -111,6 +111,7 @@ class UserController {
                 session.user = it.name
                 session.userId = it.id
                 session.committee = (it?.committee).name
+                session.committeeId = (it.committee).id
                 session.department = (it.committee).department
                 session.permission = it.permission
                 session.role = it.role

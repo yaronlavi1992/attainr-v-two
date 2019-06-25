@@ -17,7 +17,7 @@ class ManagementController {
             purchaseList = purchaseList.findAll{it.communityApproval?.approved != true}
         } else if (session.role == RoleOf.COMMUNITY_ACCOUNTANT) { // shows purchases approved only by department
             purchaseList = Purchase.findAllByDepartmentApprovalInList(Approval.findAllByApproved(true))
-            purchaseList = purchaseList.findAll{it.accountantApproval?.approved != true}
+            purchaseList = purchaseList.findAll{it.accountantApproval?.approved != true || it.status == PurchaseStatus.PAYMENT_REQUIRED} // filter purchases which aren't approved by accountant or require payment
         }
         purchaseList = purchaseList.findAll{it.status != PurchaseStatus.COMPLETE}
         respond purchaseList, model: [purchaseCount: purchaseService.count()]

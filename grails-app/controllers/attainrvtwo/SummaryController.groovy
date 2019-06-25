@@ -7,12 +7,21 @@ import static org.springframework.http.HttpStatus.*
 class SummaryController {
 
     SummaryService summaryService
+    CommitteeService committeeService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
+        List<Summary> summaryList
+        if (session.role == RoleOf.COMMITTEE_MANAGER) {
+            Committee selectedCommittee = committeeService.get(session.committeeId)
+            summaryList = Summary.findAllByCommittee(selectedCommittee)
+        } else if (session.role == RoleOf.DEPARTMENT_MANAGER) {
+            List<Committee> committeeList = Committee.findAllByDepartment(session.department)
+            summaryList = Summary.findAllByCommitteeInList(committeeList)
+        }
         params.max = Math.min(max ?: 10, 100)
-        respond summaryService.list(params), model: [summaryCount: summaryService.count()]
+        respond summaryList, model: [summaryCount: summaryService.count()]
     }
 
     def show(Long id) {
@@ -25,6 +34,10 @@ class SummaryController {
     }
 
     def save(Summary summary) {
+        summary.description = params.description
+        summary.committee = committeeService.get(params.committee.id as Integer)
+        summary.file = summaryFile(params)
+
         if (summary == null) {
             notFound()
             return
@@ -44,6 +57,13 @@ class SummaryController {
             }
             '*' { respond summary, [status: CREATED] }
         }
+    }
+    def MyFile summaryFile(params) {
+        MyFile file = new MyFile(params)
+        file.fileName = params.fileName
+        file.myFile = (params.summaryFile).getBytes()
+        file.save()
+        return file
     }
 
     def edit(Long id) {

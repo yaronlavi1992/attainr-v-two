@@ -71,10 +71,18 @@
             }
         }
 
+        function compareTotalPriceAndQuotePrice() {
+            if ($("#totalPurchasePrice").val() != $("#firstQuotePrice").val()) {
+                alert('הצעת המחיר אינה תואמת את מחיר ההזמנה');
+            }
+        }
+
+
 
 </script>
 <h1 class="title text-center">בקשת רכש חדשה</h1>
-<g:uploadForm dir="rtl" resource="${this.purchase}" controller="purchase" class="float-center container" action="save" method="POST">
+<g:uploadForm dir="rtl" resource="${this.purchase}" controller="purchase" class="float-center container" action="save"
+              method="POST">
     <table>
         <tr>
             <td>
@@ -101,57 +109,60 @@
         <label for="purchaseName">שם הבקשה</label>
         <input type="text" id="purchaseName" name="purchaseName" required="required"/>
     </div>
-        <table name="purchaseTable" class="table order-list table-bordered">
-            <thead>
-            <tr>
-                <td class="text-right">תיאור</td>
-                <td class="text-right">כמות אריזה</td>
-                <td class="text-right">מחיר אריזה</td>
-                <td class="text-right">מימון חיצוני</td>
-                <td class="text-right">סה"כ מחיר(₪)</td>
-                <td class="text-right">פעולה</td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td class="col-sm-3">
-                    <input type="textarea" id="description" name="description" class="form-control" required="true"/>
-                </td>
-                <td class="col-sm-1">
-                    <input type="number" id="packQuantity" name="packQuantity" class="form-control"
-                           onchange="calculateTotalPrice()" required="true"/>
-                </td>
-                <td class="col-sm-2">
-                    <input type="number decimal" id="packPrice" name="packPrice" class="form-control"
-                           onchange="calculateTotalPrice()" required="true"/>
-                </td>
-                <td class="col-sm-1">
-                    <input type="number decimal" id="externalFunding" name="externalFunding" value="0" class="form-control"/>
-                </td>
-                <td class="col-sm-2">
-                    <input type="number decimal" id="totalPrice" name="totalPrice" class="form-control" readonly="readonly"/>
-                </td>
-                <td class="col-sm-2"><a class="deleteRow"></a>
-                </td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr>
-                <td colspan="4">
-                    <input type="button" class="col-sm-12 btn btn-lg btn-block bg-success" id="addrow" value="הוסף שורה"/>
-                </td>
-                <td colspan="1">
-                    <label for="totalPurchasePrice" class="float-right">מחיר בקשה סופי(₪)</label>
-                    <input type="number decimal" class="col-sm-12" id="totalPurchasePrice" name="totalPurchasePrice" readonly="readonly"/>
-                </td>
-                <td colspan="1">
+    <table name="purchaseTable" class="table order-list table-bordered">
+        <thead>
+        <tr>
+            <td class="text-right">תיאור</td>
+            <td class="text-right">כמות אריזה</td>
+            <td class="text-right">מחיר אריזה</td>
+            <td class="text-right">מימון חיצוני</td>
+            <td class="text-right">סה"כ מחיר(₪)</td>
+            <td class="text-right">פעולה</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="col-sm-3">
+                <input type="textarea" id="description" name="description" class="form-control" required="true"/>
+            </td>
+            <td class="col-sm-1">
+                <input type="number" id="packQuantity" name="packQuantity" class="form-control"
+                       onchange="calculateTotalPrice()" required="true"/>
+            </td>
+            <td class="col-sm-2">
+                <input type="number decimal" id="packPrice" name="packPrice" class="form-control"
+                       onchange="calculateTotalPrice()" required="true"/>
+            </td>
+            <td class="col-sm-1">
+                <input type="number decimal" id="externalFunding" name="externalFunding" value="0"
+                       class="form-control"/>
+            </td>
+            <td class="col-sm-2">
+                <input type="number decimal" id="totalPrice" name="totalPrice" class="form-control"
+                       readonly="readonly"/>
+            </td>
+            <td class="col-sm-2"><a class="deleteRow"></a>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="4">
+                <input type="button" class="col-sm-12 btn btn-lg btn-block bg-success" id="addrow" value="הוסף שורה"/>
+            </td>
+            <td colspan="1">
+                <label for="totalPurchasePrice" class="float-right">מחיר בקשה סופי(₪)</label>
+                <input type="number decimal" class="col-sm-12" id="totalPurchasePrice" name="totalPurchasePrice"
+                       readonly="readonly"/>
+            </td>
+            <td colspan="1">
 
-                </td>
-            </tr>
-            <tr>
-            </tr>
-            </tfoot>
-        </table>
+            </td>
+        </tr>
+        <tr>
+        </tr>
+        </tfoot>
+    </table>
 
     <table name="freeTextTable" class="table-bordered">
         <tr>
@@ -177,13 +188,15 @@
         <tbody>
         <tr>
             <td class="col-sm-1">
-                <input type="number" name="firstQuoteNumber" value="1" class="form-control text-center" readonly="readonly"/>
+                <input type="number" name="firstQuoteNumber" value="1" class="form-control text-center"
+                       readonly="readonly"/>
             </td>
             <td class="col-sm-1">
                 <input type="text" name="firstSupplierName" class="form-control" required="true"/>
             </td>
             <td class="col-sm-1">
-                <input type="number decimal" name="firstQuotePrice" class="form-control" required="true"/>
+                <input type="number decimal" id="firstQuotePrice" name="firstQuotePrice" class="form-control"
+                       required="true"/>
             </td>
             <td class="col-sm-1">
                 <g:field type="file" name="firstQuoteAttachment" required="true"></g:field>
@@ -192,7 +205,8 @@
         </tr>
         <tr>
             <td class="col-sm-1">
-                <input type="number" name="secondQuoteNumber" value="2" class="form-control text-center" readonly="readonly"/>
+                <input type="number" name="secondQuoteNumber" value="2" class="form-control text-center"
+                       readonly="readonly"/>
             </td>
             <td class="col-sm-1">
                 <input type="text" name="secondSupplierName" class="form-control"/>
@@ -206,7 +220,8 @@
         </tr>
         <tr>
             <td class="col-sm-1">
-                <input type="number" name="thirdQuoteNumber" value="3" class="form-control text-center" readonly="readonly"/>
+                <input type="number" name="thirdQuoteNumber" value="3" class="form-control text-center"
+                       readonly="readonly"/>
             </td>
             <td class="col-sm-1">
                 <input type="text" name="thirdSupplierName" class="form-control"/>
@@ -221,8 +236,8 @@
         </tbody>
     </table>
     <div class="text-center">
-        <g:submitButton name="create" class="save bg-primary btn"
-                        value="שמור בקשה"/>
+        <g:submitButton name="create" class="save bg-info btn"
+                        value="שמור בקשה" onclick="compareTotalPriceAndQuotePrice()"/>
     </div>
     <br>
 </g:uploadForm>

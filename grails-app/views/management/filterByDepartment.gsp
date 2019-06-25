@@ -17,7 +17,7 @@
             <g:link class="create" action="create" controller="purchase">בקשה חדשה</g:link>
         </li>
         <li>
-            <g:select class="btn bg-primary" dir="rtl" id="depDDLid" name="departmentDDL" action="filterByDepartment"
+            <g:select class="btn bg-info" dir="rtl" id="depDDLid" name="departmentDDL" action="filterByDepartment"
                       controller="management" from="${Department.list()}" optionKey="id" optionValue="${name}"
                       value="${departments}" noSelection="${['null':'לפי מחלקת..']}" onchange="goToPage(this.value)"/>
         </li>

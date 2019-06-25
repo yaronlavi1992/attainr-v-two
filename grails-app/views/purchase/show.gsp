@@ -63,6 +63,13 @@
             $("#grandtotal").text(grandTotal.toFixed(2));
         }
 
+        function compareTotalPriceAndQuotePrice() {
+            if ($("#totalPurchasePrice").val() != $("#firstQuotePrice").val()) {
+                alert('הצעת המחיר אינה תואמת את מחיר ההזמנה');
+            }
+        }
+
+
 
 </script>
 <br>
@@ -92,7 +99,7 @@
             </li>
             <li>
                 <g:link class="btn bg-success" action="choice" controller="management"
-                        params="[id: params.id, choice: true]">אישור בקשה
+                        params="[id: params.id, choice: true]" onclick="compareTotalPriceAndQuotePrice()">אישור בקשה
                 </g:link>
             </li>
         </g:if>
@@ -112,7 +119,7 @@
         </g:if>
         <g:if test="${this.purchase.get(params.id).status == PurchaseStatus.PAYMENT_REQUIRED}">
             <li>
-                <g:link class="btn bg-primary" controller="myFile" action="showFile"
+                <g:link class="btn bg-info" controller="myFile" action="showFile"
                         id="${purchase?.receipts[0]?.file?.id}"
                         name="showReceipt">הצג קבלה
                 </g:link>
@@ -120,7 +127,8 @@
         </g:if>
         <g:if test="${this.purchase.get(params.id).status == PurchaseStatus.PAYMENT_REQUIRED && session.role == RoleOf.COMMUNITY_ACCOUNTANT}">
             <li>
-                <g:link class="btn bg-primary" controller="management" action="statusComplete" id="${params.id}" name="showReceipt">סיים בקשה
+                <g:link class="btn bg-info" controller="management" action="statusComplete" id="${params.id}"
+                        name="showReceipt">סיים בקשה
                 </g:link>
             </li>
         </g:if>
@@ -244,7 +252,8 @@
                        readonly="readonly"/>
             </td>
             <td class="col-sm-1">
-                <input type="text" name="firstSupplierName" class="form-control" value="${((purchase.quotes).sort{it.number}).sort{it.number}[0]?.name}"
+                <input type="text" name="firstSupplierName" class="form-control"
+                       value="${((purchase.quotes).sort{it.number}).sort{it.number}[0]?.name}"
                        readonly="readonly"/>
             </td>
             <td class="col-sm-1">
@@ -263,11 +272,13 @@
                        readonly="readonly"/>
             </td>
             <td class="col-sm-1">
-                <input type="text" name="secondSupplierName" class="form-control" value="${(purchase.quotes).sort{it.number}[1]?.name}"
+                <input type="text" name="secondSupplierName" class="form-control"
+                       value="${(purchase.quotes).sort{it.number}[1]?.name}"
                        readonly="readonly"/>
             </td>
             <td class="col-sm-1">
-                <input type="number" name="secondQuotePrice" class="form-control" value="${(purchase.quotes).sort{it.number}[1]?.price}"
+                <input type="number" name="secondQuotePrice" class="form-control"
+                       value="${(purchase.quotes).sort{it.number}[1]?.price}"
                        readonly="readonly"/>
             </td>
             <td class="col-sm-1">
@@ -282,11 +293,13 @@
                        readonly="readonly"/>
             </td>
             <td class="col-sm-1">
-                <input type="text" name="thirdSupplierName" class="form-control" value="${(purchase.quotes).sort{it.number}[2]?.name}"
+                <input type="text" name="thirdSupplierName" class="form-control"
+                       value="${(purchase.quotes).sort{it.number}[2]?.name}"
                        readonly="readonly"/>
             </td>
             <td class="col-sm-1">
-                <input type="number" name="thirdQuotePrice" class="form-control" value="${(purchase.quotes).sort{it.number}[2]?.price}"
+                <input type="number" name="thirdQuotePrice" class="form-control"
+                       value="${(purchase.quotes).sort{it.number}[2]?.price}"
                        readonly="readonly"/>
             </td>
             <td class="col-sm-1">

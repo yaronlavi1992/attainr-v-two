@@ -41,7 +41,7 @@
             <g:link action="changePassword">
                 <input class="btn bg-danger" type="button" value="שינוי סיסמה">
             </g:link>
-            <input class="btn bg-primary" type="submit" value="כניסה למערכת"/>
+            <input class="btn bg-info" type="submit" value="כניסה למערכת"/>
         </div>
     </g:form>
 </g:else>

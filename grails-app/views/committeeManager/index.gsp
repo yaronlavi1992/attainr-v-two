@@ -15,6 +15,12 @@
         <li>
             <g:link class="create bg-success text-white" action="create" controller="purchase">בקשה חדשה</g:link>
         </li>
+        <li>
+            <g:link class="create bg-info text-white" action="showCompletedPurchases" controller="purchase">בקשות שהושלמו</g:link>
+        </li>
+        <li>
+            <g:link class="create bg-info text-white" action="index" controller="summary">סיכומי ישיבות</g:link>
+        </li>
     </ul>
 </div>
 <div id="list-purchase" class="content scaffold-list" role="main">

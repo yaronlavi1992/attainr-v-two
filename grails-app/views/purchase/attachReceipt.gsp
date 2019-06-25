@@ -69,7 +69,7 @@
             </tr>
         </table>
         <div class="text-center">
-            <g:submitButton name="submit" class="save bg-primary btn"
+            <g:submitButton name="submit" class="save bg-info btn"
                             value="שמור בקשה"/>
         </div>
     </g:uploadForm>
