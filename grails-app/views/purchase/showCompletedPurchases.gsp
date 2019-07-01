@@ -30,7 +30,7 @@
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
     </g:if>
-    <f:table collection="${purchaseList}"/>
+    <f:table collection="${purchaseList}" properties="['name','paymentDateApproval','departmentApproval','accountantApproval','communityApproval','ceoApproval','paymentCloseDateApproval']"/>
 
     <div class="pagination">
         <g:paginate total="${purchaseCount ?: 0}"/>

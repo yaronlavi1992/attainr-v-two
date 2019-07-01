@@ -18,16 +18,21 @@
             <g:link class="create" action="create" controller="purchase">בקשה חדשה</g:link>
         </li>
         <li>
-            <g:link class="create bg-info text-white" action="showCompletedPurchases" controller="purchase">בקשות שהושלמו</g:link>
+            <g:link class="create bg-info text-white" action="showCompletedPurchases" controller="purchase">בקשות
+                שהושלמו
+            </g:link>
         </li>
         <li>
-            <g:select class="btn bg-info" dir="rtl" id="commDDLid" name="committeeDDL" action="filterByCommittee"
-                      controller="management" from="${Committee.list()}" optionKey="id" optionValue="${name}"
+            <g:select class="btn bg-info text-white" dir="rtl" id="commDDLid" name="committeeDDL"
+                      action="filterByCommittee"
+                      controller="management" from="${Committee.findAllByNameNotEqual( 'MANAGEMENT' )}" optionKey="id"
+                      optionValue="${name}"
                       value="${committees}" noSelection="${['null':'לפי ועדת..']}"
                       onchange="goToCommittee(this.value)"/>
         </li>
         <li>
-            <g:select class="btn bg-info" dir="rtl" id="depDDLid" name="departmentDDL" action="filterByDepartment"
+            <g:select class="btn bg-info text-white" dir="rtl" id="depDDLid" name="departmentDDL"
+                      action="filterByDepartment"
                       controller="management" from="${Department.list()}" optionKey="id" optionValue="${name}"
                       value="${departments}" noSelection="${['null':'לפי מחלקת..']}"
                       onchange="goToDepartment(this.value)"/>
@@ -54,9 +59,6 @@
     function goToDepartment(requestParams) {
     window.location.href="${'/management/filterByDepartment'}" + "/" + requestParams;
     }
-
-
-
 
 </script>
 </body>

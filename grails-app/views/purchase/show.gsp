@@ -151,11 +151,6 @@
                 <label>ועדה</label>
                 <g:field type="text" name="committeeName" value="${session.committee}" readonly="readonly"></g:field>
             </td>
-            <td>
-                <label>תאריך</label>
-                <g:formatDate format="dd-MM-yyyy" name="orderDate" value="${purchase.paymentDate}"
-                              readonly="readonly"></g:formatDate>
-            </td>
         </tr>
     </table>
     <br>
@@ -257,7 +252,7 @@
                        readonly="readonly"/>
             </td>
             <td class="col-sm-1">
-                <input type="number decimal" name="firstQuotePrice" class="form-control"
+                <input type="number decimal" id="firstQuotePrice" name="firstQuotePrice" class="form-control"
                        value="${(purchase.quotes).sort{it.number}[0]?.price}" readonly="readonly"/>
             </td>
             <td class="col-sm-1">
@@ -312,24 +307,5 @@
     </table>
     <br>
 </g:form>
-<!--<div id="show-purchase" class="content scaffold-show" role="main">-->
-<!--    <h1>-->
-<!--        <g:message code="default.show.label" args="[entityName]"/>-->
-<!--    </h1>-->
-<!--    <g:if test="${flash.message}">-->
-<!--        <div class="message" role="status">${flash.message}</div>-->
-<!--    </g:if>-->
-<!--    <f:display bean="purchase"/>-->
-<!--    <g:form resource="${this.purchase}" method="DELETE">-->
-<!--        <fieldset class="buttons">-->
-<!--            <g:link class="edit" action="edit" resource="${this.purchase}">-->
-<!--                <g:message code="default.button.edit.label" default="Edit"/>-->
-<!--            </g:link>-->
-<!--            <input class="delete" type="submit"-->
-<!--                   value="${message(code: 'default.button.delete.label', default: 'Delete')}"-->
-<!--                   onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>-->
-<!--        </fieldset>-->
-<!--    </g:form>-->
-<!--</div>-->
 </body>
 </html>

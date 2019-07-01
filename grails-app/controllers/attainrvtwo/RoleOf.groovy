@@ -8,8 +8,10 @@ enum RoleOf {
     COMMUNITY_ACCOUNTANT("חשב הקהילה"),
     DEPARTMENT_MANAGER("מנהל מחלקה"),
     COMMITTEE_MANAGER("מנהל ועדה"),
-    COMMUNITY_SECRETARY("מזכירת הקהילה")
-//    CULTURE_AND_SECURITY_CEO("מנהל כללי לתרבות ובטחון")
+    COMMUNITY_SECRETARY("מזכירת הקהילה"),
+    LEISURE_AND_SECRETARY_CEO("מנהל כללי לפנאי ומזכירות"),
+    INFANCY_AND_YOUTH_CEO("מנהל כללי לגיל הרך ונוער"),
+    MAINTENANCE_AND_SPORT_CEO("מנהל כללי לאחזקה וספורט")
     String roleLiteral
 
     RoleOf(String value) {

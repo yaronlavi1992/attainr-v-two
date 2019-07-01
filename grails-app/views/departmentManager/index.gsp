@@ -23,21 +23,11 @@
         </li>
         <g:if test="${session.role == RoleOf.COMMUNITY_SECRETARY}">
             <li>
-                <g:link class="create btn bg-success" name="addUser" action="create" controller="user">הוסף משתמש
+                <g:link class="create btn bg-success text-white" name="addUser" action="create" controller="user">הוסף משתמש
                 </g:link>
             </li>
             <li>
-                <g:link class="create btn bg-success" name="addCommittee" action="create" controller="committee">הוסף
-                    וועדה
-                </g:link>
-            </li>
-            <li>
-                <g:link class="create btn bg-success" name="addDepartment" action="create" controller="department">הוסף
-                    מחלקה
-                </g:link>
-            </li>
-            <li>
-                <g:link class="list btn bg-info" name="showUsers" action="showUsers" controller="user">הצג משתמשים
+                <g:link class="list btn bg-info text-white" name="showUsers" action="showUsers" controller="user">הצג משתמשים
                 </g:link>
             </li>
         </g:if>

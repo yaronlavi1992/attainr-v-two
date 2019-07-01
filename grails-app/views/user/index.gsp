@@ -35,13 +35,8 @@
             <input type="text" dir="rtl" placeholder="הכנסת שם משתמש" name="username"/>
             <label>סיסמה</label>
             <input type="password" dir="rtl" placeholder="הכנסת סיסמה" name="password"/>
-            <g:link action="lostPassword">
-                <input class="btn bg-danger" type="button" value="שחזור סיסמה">
-            </g:link>
-            <g:link action="changePassword">
-                <input class="btn bg-danger" type="button" value="שינוי סיסמה">
-            </g:link>
             <input class="btn bg-info" type="submit" value="כניסה למערכת"/>
+            <input class="btn bg-danger" type="button" value="שחזור סיסמה" onclick="alert('לצורך איפוס הסיסמה פנה למזכירות הישוב')">
         </div>
     </g:form>
 </g:else>

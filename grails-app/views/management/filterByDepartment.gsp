@@ -27,13 +27,9 @@
     <h1>
         <g:message code="default.list.label" args="[entityName]"/>
     </h1>
-
-    <g:if test="${session.filterPurchases}">
-        <div class="mx-auto text-center" style="width: 300px;" dir="rtl">
-            <h1><b>בקשות של מחלקת: ${Department.get(params.id)}</b></h1>
-        </div>
-    </g:if>
-
+    <div class="mx-auto text-center" style="width: 300px;" dir="rtl">
+        <h1><b>בקשות של מחלקת: ${Department.get(params.id)}</b></h1>
+    </div>
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
     </g:if>

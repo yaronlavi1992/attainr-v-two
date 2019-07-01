@@ -1,7 +1,5 @@
 package attainrvtwo
 
-import grails.databinding.BindingFormat
-
 class Purchase {
 
     String name
@@ -12,8 +10,8 @@ class Purchase {
     Approval accountantApproval
     Approval communityApproval
     Approval ceoApproval
-    @BindingFormat('dd-MM-yyyy')
-    Date paymentDate
+    Approval paymentDateApproval
+    Approval paymentCloseDateApproval
 
     static hasMany = [quotes: Quote, receipts: Receipt, purchaseItems: PurchaseItem]
     static belongsTo = [user: User]
@@ -29,7 +27,8 @@ class Purchase {
         accountantApproval(nullable: true)
         communityApproval(nullable: true)
         ceoApproval(nullable: true)
-        paymentDate(nullable: true)
+        paymentDateApproval(nullable: true)
+        paymentCloseDateApproval(nullable: true)
     }
 
     @Override

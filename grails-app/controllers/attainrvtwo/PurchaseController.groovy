@@ -38,8 +38,8 @@ class PurchaseController {
         purchase.name = params.purchaseName
         purchase.user = userService.get(session.userId)
         purchase.status = PurchaseStatus.IN_PROGRESS
-        purchase.paymentDate = params.orderDate as Date
         purchase.description = params.freeText
+        purchase.paymentDateApproval = new Approval(approved: true)
         purchase.totalPurchasePrice = params.totalPurchasePrice as Double
 
         //extract first item

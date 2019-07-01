@@ -97,11 +97,6 @@
                 <label>ועדה</label>
                 <g:field type="text" name="committeeName" value="${session.committee}" readonly="readonly"></g:field>
             </td>
-            <td>
-                <label>תאריך</label>
-                <g:formatDate format="dd-MM-yyyy" name="orderDate" value="${new Date()}"
-                              readonly="readonly"></g:formatDate>
-            </td>
         </tr>
     </table>
     <br>

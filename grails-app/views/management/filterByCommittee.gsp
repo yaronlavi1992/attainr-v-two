@@ -18,7 +18,8 @@
         </li>
         <li>
             <g:select class="btn bg-info" dir="rtl" id="commDDLid" name="committeeDDL" action="filterByCommittee"
-                      controller="management" from="${Committee.list()}" optionKey="id" optionValue="${name}"
+                      controller="management" from="${Committee.findAllByNameNotEqual( 'MANAGEMENT' )}" optionKey="id"
+                      optionValue="${name}"
                       value="${committees}" noSelection="${['null':'לפי ועדת..']}" onchange="goToPage(this.value)"/>
         </li>
     </ul>
@@ -27,13 +28,9 @@
     <h1>
         <g:message code="default.list.label" args="[entityName]"/>
     </h1>
-
-    <g:if test="${session.filterPurchases}">
-        <div class="mx-auto text-center" style="width: 300px;" dir="rtl">
-            <h1><b>בקשות של ועדת: ${Committee.get(params.id)}</b></h1>
-        </div>
-    </g:if>
-
+    <div class="mx-auto text-center" style="width: 300px;" dir="rtl">
+        <h1><b>בקשות של ועדת: ${Committee.get(params.id)}</b></h1>
+    </div>
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
     </g:if>
@@ -47,8 +44,6 @@
     function goToPage(requestParams) {
     window.location.href="${'/management/filterByCommittee'}" + "/" + requestParams;
     }
-
-
 
 </script>
 </body>
