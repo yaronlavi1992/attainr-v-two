@@ -16,7 +16,7 @@ class SummaryController {
         if (session.role == RoleOf.COMMITTEE_MANAGER) {
             Committee selectedCommittee = committeeService.get(session.committeeId)
             summaryList = Summary.findAllByCommittee(selectedCommittee)
-        } else if (session.role == RoleOf.DEPARTMENT_MANAGER) {
+        } else if (session.role == RoleOf.DEPARTMENT_MANAGER || RoleOf.COMMUNITY_SECRETARY) {
             List<Committee> committeeList = Committee.findAllByDepartment(session.department)
             summaryList = Summary.findAllByCommitteeInList(committeeList)
         }

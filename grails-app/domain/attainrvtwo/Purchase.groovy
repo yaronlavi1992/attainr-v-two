@@ -13,7 +13,7 @@ class Purchase {
     Approval paymentDateApproval
     Approval paymentCloseDateApproval
 
-    static hasMany = [quotes: Quote, receipts: Receipt, purchaseItems: PurchaseItem]
+    static hasMany = [quotes: Quote, receipts: Receipt, purchaseItems: PurchaseItem, comments: Comment]
     static belongsTo = [user: User]
     static mapping = {
         status defaultValue: PurchaseStatus.IN_PROGRESS

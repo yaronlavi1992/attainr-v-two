@@ -2,6 +2,7 @@ package attainrvtwo
 
 class PurchaseItem {
 
+    Double financialSection
     String description
     Double packPrice
     Double packQuantity

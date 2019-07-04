@@ -43,7 +43,7 @@
     </ul>
 </div>
 <br>
-<div class="text-center">
+<div class="text-center" dir="rtl">
     <label for="purchaseName">שם הבקשה</label>
     <input type="text" id="purchaseName" name="purchaseName" value="${purchase.name}" readonly="readonly"/>
 </div>

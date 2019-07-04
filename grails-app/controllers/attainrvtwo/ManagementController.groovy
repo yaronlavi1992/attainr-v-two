@@ -1,5 +1,7 @@
 package attainrvtwo
 
+import com.sun.org.apache.xpath.internal.operations.Bool
+
 class ManagementController {
 
     PurchaseService purchaseService
@@ -12,7 +14,7 @@ class ManagementController {
         params.max = Math.min(max ?: 10, 100)
         // shows purchases approved by all except ceo
         if (session.role == RoleOf.LEISURE_AND_SECRETARY_CEO) { // yoav
-            List<Department> departmentList = [DepartmentOf.LEISURE_AND_COMMUNITY, DepartmentOf.SECRETARIAT]
+            List<Department> departmentList = [DepartmentOf.CULTURE]
             departmentList.each {
                 List<Committee> committeeList = Committee.findAllByDepartment(Department.findByName(it))
                 List<User> userList = User.findAllByCommitteeInList(committeeList)
@@ -21,9 +23,10 @@ class ManagementController {
             if (!purchaseList.isEmpty()) {
                 purchaseList = purchaseList.intersect(Purchase.findAllByCommunityApprovalInList(Approval.findAllByApproved(true)))
                 purchaseList = purchaseList.findAll { it.ceoApproval?.approved != true }
+                purchaseList = purchaseList.findAll { it.status == PurchaseStatus.IN_PROGRESS }
             }
         } else if (session.role == RoleOf.INFANCY_AND_YOUTH_CEO) { // amit
-            List<Department> departmentList = [DepartmentOf.INFANCY, DepartmentOf.CHILDREN_AND_YOUTH]
+            List<Department> departmentList = [DepartmentOf.CHILDREN_AND_YOUTH]
             departmentList.each {
                 List<Committee> committeeList = Committee.findAllByDepartment(Department.findByName(it))
                 List<User> userList = User.findAllByCommitteeInList(committeeList)
@@ -32,10 +35,10 @@ class ManagementController {
             if (!purchaseList.isEmpty()) {
                 purchaseList = purchaseList.intersect(Purchase.findAllByCommunityApprovalInList(Approval.findAllByApproved(true)))
                 purchaseList = purchaseList.findAll { it.ceoApproval?.approved != true }
+                purchaseList = purchaseList.findAll { it.status == PurchaseStatus.IN_PROGRESS }
             }
         } else if (session.role == RoleOf.MAINTENANCE_AND_SPORT_CEO) { // ran
-            List<Department> departmentList = [DepartmentOf.SPORTS_CENTER, DepartmentOf.MAINTENANCE]
-            departmentList.each {
+            DepartmentOf.each {
                 List<Committee> committeeList = Committee.findAllByDepartment(Department.findByName(it))
                 List<User> userList = User.findAllByCommitteeInList(committeeList)
                 purchaseList.addAll(Purchase.findAllByUserInList(userList))
@@ -43,6 +46,7 @@ class ManagementController {
             if (!purchaseList.isEmpty()) {
                 purchaseList = purchaseList.intersect(Purchase.findAllByCommunityApprovalInList(Approval.findAllByApproved(true)))
                 purchaseList = purchaseList.findAll { it.ceoApproval?.approved != true }
+                purchaseList = purchaseList.findAll { it.status == PurchaseStatus.IN_PROGRESS }
             }
         } else if (session.role == RoleOf.COMMUNITY_MANAGER) {
             // shows purchases approved by both department and accountant
@@ -54,7 +58,6 @@ class ManagementController {
                 it.accountantApproval?.approved != true || it.status == PurchaseStatus.PAYMENT_REQUIRED
             } // filter purchases which aren't approved by accountant or require payment
         }
-        purchaseList = purchaseList.findAll { it.status != PurchaseStatus.COMPLETE }
         respond purchaseList, model: [purchaseCount: purchaseService.count()]
     }
 
@@ -115,6 +118,7 @@ class ManagementController {
             committeeApp.approved = (params.choice)?.toBoolean() ? true : false
             purchase.departmentApproval = committeeApp
         }
+        (params.choice).toBoolean() ? '' : (purchase.status = PurchaseStatus.DENIED) // if anyone pressed 'deny' set status to DENIED
         purchaseService.save(purchase)
         statusUpdate(purchase)
         redirect(controller: "user", action: "statusDisplay")
@@ -147,7 +151,6 @@ class ManagementController {
                     purchaseInstance.status = PurchaseStatus.COMPLETE
                 }
                 break
-        //TODO: add other cases such as 'payment received', 'purchase complete' etc.
         }
         purchaseService.save(purchaseInstance)
     }

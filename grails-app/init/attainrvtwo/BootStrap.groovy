@@ -40,7 +40,7 @@ class BootStrap {
 
 //        leisure department manager and one committee user
         def leisure_and_community = new Department(
-                name: DepartmentOf.LEISURE_AND_COMMUNITY
+                name: DepartmentOf.LEISURE_COMMUNITY_AND_SPORT_CENTER
         ).save()
 
         def soldiers = new Committee(

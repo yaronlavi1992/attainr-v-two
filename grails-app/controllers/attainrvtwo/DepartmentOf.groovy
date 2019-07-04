@@ -2,10 +2,10 @@ package attainrvtwo
 
 enum DepartmentOf {
     INFANCY("גיל הרך"),
-    LEISURE_AND_COMMUNITY("פנאי וקהילה"),
+    LEISURE_COMMUNITY_AND_SPORT_CENTER("פנאי קהילה ומרכז ספורט"),
     CHILDREN_AND_YOUTH("ילדים ונוער"),
     MAINTENANCE("אחזקה"),
-    SPORTS_CENTER("מרכז ספורט"),
+    CULTURE("תרבות"),
     SECRETARIAT("מזכירות"),
     MANAGEMENT("הנהלה")
     String departmentLiteral

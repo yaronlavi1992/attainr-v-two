@@ -14,7 +14,7 @@
 <body>
 <script type="text/javascript">
         $(document).ready(function () {
-            var counter = 0;
+            var counter = $('#purchaseItemsLength').val() - 1;
 
             $("#addrow").on("click", function () {
                 var newRow = $("<tr>");
@@ -82,7 +82,7 @@
 
 </script>
 <h1 class="title text-center">בקשת רכש חדשה</h1>
-<g:uploadForm dir="rtl" resource="${this.purchase}" controller="purchase" class="float-center container" action="save"
+<g:uploadForm dir="rtl" resource="${this.purchase}" controller="purchase" class="float-center container" action="saveAfterEdit"
               method="POST">
     <table>
         <tr>
@@ -103,7 +103,7 @@
     <br>
     <div class="text-center">
         <label for="purchaseName">שם הבקשה</label>
-        <input type="text" id="purchaseName" name="purchaseName" required="true"/>
+        <input type="text" id="purchaseName" name="purchaseName" value="${purchase.name}" readonly="true"/>
     </div>
     <table name="purchaseTable" class="table order-list table-bordered">
         <thead>
@@ -118,32 +118,38 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td class="col-sm-1">
-                <input type="number decimal" id="financialSection" name="financialSection" class="form-control" required="true"/>
-            </td>
-            <td class="col-sm-3">
-                <input type="textarea" id="description" name="description" class="form-control" required="true"/>
-            </td>
-            <td class="col-sm-1">
-                <input type="number" id="packQuantity" name="packQuantity" class="form-control"
-                       onchange="calculateTotalPrice()" required="true"/>
-            </td>
-            <td class="col-sm-2">
-                <input type="number decimal" id="packPrice" name="packPrice" class="form-control"
-                       onchange="calculateTotalPrice()" required="true"/>
-            </td>
-            <td class="col-sm-1">
-                <input type="number decimal" id="externalFunding" name="externalFunding" value="0"
-                       class="form-control"/>
-            </td>
-            <td class="col-sm-2">
-                <input type="number decimal" id="totalPrice" name="totalPrice" class="form-control"
-                       readonly="readonly"/>
-            </td>
-            <td class="col-sm-2"><a class="deleteRow"></a>
-            </td>
-        </tr>
+
+        <input type="number" id="purchaseItemsLength" hidden="true" value="${(purchase.purchaseItems).size()}"/>
+        <g:each status="i" in="${purchase.purchaseItems}" var="item">
+            <tr>
+                <td class="col-sm-1">
+                    <input type="number decimal" id="financialSection${i == 0 ? '' : i - 1}" name="financialSection${i == 0 ? '' : i - 1}" class="form-control" value="${item.financialSection}" />
+                </td>
+                <td class="col-sm-3">
+                    <input type="text" name="description${i == 0 ? '' : i - 1}" class="form-control" value="${item.description}"
+                           />
+                </td>
+                <td class="col-sm-1">
+                    <input type="number" id="packQuantity${i == 0 ? '' : i - 1}" name="packQuantity${i == 0 ? '' : i - 1}" class="form-control"
+                           onchange="calculateTotalPrice()" value="${item.packQuantity as Integer}" />
+                </td>
+                <td class="col-sm-2">
+                    <input type="number decimal" id="packPrice${i == 0 ? '' : i - 1}" name="packPrice${i == 0 ? '' : i - 1}" class="form-control"
+                           onchange="calculateTotalPrice()" value="${item.packPrice}" />
+                </td>
+                <td class="col-sm-1">
+                    <input type="number decimal" name="externalFunding${i == 0 ? '' : i - 1}" class="form-control"
+                           value="${item.externalFunding}${i == 0 ? '' : i - 1}" />
+                </td>
+                <td class="col-sm-2">
+                    <input type="number decimal" id="totalPrice${i == 0 ? '' : i - 1}" name="totalPrice${i == 0 ? '' : i - 1}" class="form-control"
+                           value="${item.totalItemPrice}" readonly="true"/>
+                </td>
+                <td class="col-sm-2"><a class="deleteRow" disabled="true"></a>
+                </td>
+            </tr>
+        </g:each>
+
         </tbody>
         <tfoot>
         <tr>
@@ -153,7 +159,7 @@
             <td colspan="1">
                 <label for="totalPurchasePrice" class="float-right">מחיר בקשה סופי(₪)</label>
                 <input type="number decimal" class="col-sm-12" id="totalPurchasePrice" name="totalPurchasePrice"
-                       readonly="readonly"/>
+                       value="${purchase.totalPurchasePrice}" readonly="true"/>
             </td>
             <td colspan="1">
 
@@ -170,8 +176,8 @@
                 <label class="text-right float-right">מלל חופשי</label>
             </td>
             <td class="col-sm-10">
-                <textarea class="col-sm-12 float-right" name="freeText" id="freeText" style="resize:none"
-                          placeholder="מלל חופשי - הערות, דגשים, הסברים, פירוט מקורות התקציב וכו'"></textarea>
+                <textarea class="col-sm-12 float-right" name="freeText" id="" style="resize:none"
+                          placeholder="מלל חופשי - הערות, דגשים, הסברים, פירוט מקורות התקציב וכו'" >${purchase.description}</textarea>
             </td>
         </tr>
     </table>
@@ -189,7 +195,7 @@
         <tr>
             <td class="col-sm-1">
                 <input type="number" name="firstQuoteNumber" value="1" class="form-control text-center"
-                       readonly="readonly"/>
+                       readonly="true"/>
             </td>
             <td class="col-sm-1">
                 <input type="text" name="firstSupplierName" class="form-control" required="true"/>
@@ -206,7 +212,7 @@
         <tr>
             <td class="col-sm-1">
                 <input type="number" name="secondQuoteNumber" value="2" class="form-control text-center"
-                       readonly="readonly"/>
+                       readonly="true"/>
             </td>
             <td class="col-sm-1">
                 <input type="text" name="secondSupplierName" class="form-control"/>
@@ -221,7 +227,7 @@
         <tr>
             <td class="col-sm-1">
                 <input type="number" name="thirdQuoteNumber" value="3" class="form-control text-center"
-                       readonly="readonly"/>
+                       readonly="true"/>
             </td>
             <td class="col-sm-1">
                 <input type="text" name="thirdSupplierName" class="form-control"/>
