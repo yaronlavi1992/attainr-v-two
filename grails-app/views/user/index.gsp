@@ -3,7 +3,9 @@
 <head>
     <meta name="layout" content="main"/>
     <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}"/>
-    <title>כניסה למערכת הרכש</title>
+    <title>
+        <g:message code="default.list.label" args="[entityName]"/>
+    </title>
     <style type="text/css">
         label{
             float:right;
@@ -15,6 +17,7 @@
         input.btn {
             float:right;
         }
+
 
     </style>
 </head>
@@ -36,7 +39,8 @@
             <label>סיסמה</label>
             <input type="password" dir="rtl" placeholder="הכנסת סיסמה" name="password"/>
             <input class="btn bg-info" type="submit" value="כניסה למערכת"/>
-            <input class="btn bg-danger" type="button" value="שחזור סיסמה" onclick="alert('לצורך איפוס הסיסמה פנה למזכירות הישוב')">
+            <input class="btn bg-danger" type="button" value="שחזור סיסמה"
+                   onclick="alert('לצורך איפוס הסיסמה פנה למזכירות הישוב')">
         </div>
     </g:form>
 </g:else>

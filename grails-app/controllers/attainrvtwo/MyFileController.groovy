@@ -115,7 +115,6 @@ class MyFileController {
 
     String findContentType(String name) {
         def suffix = name.toLowerCase().replaceAll(/^.*?\.(\w+)$/, '$   1')
-        println "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! name: $name\tsuffix: $suffix"
         switch (suffix) {
             case 'pdf': return 'application/pdf'
             case 'png': return 'image/png'

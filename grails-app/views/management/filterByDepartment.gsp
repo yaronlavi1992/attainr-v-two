@@ -4,7 +4,7 @@
 <head>
     <meta name="layout" content="main"/>
     <g:set var="entityName" value="${message(code: 'purchase.label', default: 'Purchase')}"/>
-    <title>ניהול קהילה</title>
+    <title><g:message code="default.list.label" args="[entityName]"/></title>
 </head>
 <body>
 <a href="#list-purchase" class="skip" tabindex="-1">
@@ -12,7 +12,6 @@
 </a>
 <div class="nav" role="navigation">
     <ul>
-        <!--        <li><a class="home" href="${createLink(uri: '/volunteer/index')}"><g:message code="default.home.label"/></a></li>-->
         <li>
             <g:link class="create" action="create" controller="purchase">בקשה חדשה</g:link>
         </li>
@@ -25,7 +24,7 @@
 </div>
 <div id="list-purchase" class="content scaffold-list" role="main">
     <h1>
-        <g:message code="default.list.label" args="[entityName]"/>
+        רשימת בקשות
     </h1>
     <div class="mx-auto text-center" style="width: 300px;" dir="rtl">
         <h1><b>בקשות של מחלקת: ${Department.get(params.id)}</b></h1>
@@ -33,7 +32,7 @@
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
     </g:if>
-    <f:table collection="${purchaseList}"/>
+    <f:table collection="${purchaseList}" properties="['name','status','departmentApproval','accountantApproval','communityApproval','ceoApproval']"/>
 
     <div class="pagination">
         <g:paginate total="${purchaseCount ?: 0}"/>

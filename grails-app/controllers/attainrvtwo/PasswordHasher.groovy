@@ -6,15 +6,10 @@ import javax.crypto.spec.SecretKeySpec
 
 class PasswordHasher {
 
-    private static final String encryptionKey           = "ABCDEFGHIJKLMNOP";
-    private static final String characterEncoding       = "UTF-8";
-    private static final String cipherTransformation    = "AES/CBC/PKCS5PADDING";
-    private static final String aesEncryptionAlgorithem = "AES";
-
-
-    def static encodePass(String pass) {
-        return pass + '3'
-    }
+    private static final String encryptionKey           = "ABCDEFGHIJKLMNOP"
+    private static final String characterEncoding       = "UTF-8"
+    private static final String cipherTransformation    = "AES/CBC/PKCS5PADDING"
+    private static final String aesEncryptionAlgorithem = "AES"
 
     public static String encrypt(String plainText) {
         String encryptedText = ""
@@ -29,9 +24,9 @@ class PasswordHasher {
             encryptedText = encoder.encodeToString(cipherText)
 
         } catch (Exception E) {
-            System.err.println("Encrypt Exception : "+E.getMessage());
+            System.err.println("Encrypt Exception : "+E.getMessage())
         }
-        return encryptedText;
+        return encryptedText
     }
 
 }

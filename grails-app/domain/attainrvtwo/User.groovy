@@ -8,7 +8,7 @@ class User {
 
     String name
     String password
-    Long phone
+    String phone
     String email
     RoleOf role
     PermissionOf permission

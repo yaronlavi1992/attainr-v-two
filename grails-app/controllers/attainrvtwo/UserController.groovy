@@ -24,6 +24,8 @@ class UserController {
     }
 
     def save(User user) {
+        user.password = PasswordHasher.encrypt(params.password)
+
         if (user == null) {
             notFound()
             return
@@ -50,6 +52,8 @@ class UserController {
     }
 
     def update(User user) {
+        user.password = PasswordHasher.encrypt(params.password)
+
         if (user == null) {
             notFound()
             return
@@ -86,12 +90,6 @@ class UserController {
             }
             '*' { render status: NO_CONTENT }
         }
-    }
-
-    def lostPassword() {
-    }
-
-    def changePassword() {
     }
 
     def statusDisplay() {

@@ -141,7 +141,7 @@ class BootStrap {
 
         def shlomit = new User(
                 name: 'שלומית',
-                password: PasswordHasher.encrypt('2'),
+                password: PasswordHasher.encrypt('1'),
                 phone: '888',
                 email: 'e@blah.com',
                 role: RoleOf.COMMUNITY_MANAGER,

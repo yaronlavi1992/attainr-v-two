@@ -11,7 +11,7 @@ class SummaryController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
+    def index(Integer max) { // shows the list of available summaries if session user is committee/department manager or secretary
         List<Summary> summaryList
         if (session.role == RoleOf.COMMITTEE_MANAGER) {
             Committee selectedCommittee = committeeService.get(session.committeeId)
@@ -58,6 +58,7 @@ class SummaryController {
             '*' { respond summary, [status: CREATED] }
         }
     }
+
     def MyFile summaryFile(params) {
         MyFile file = new MyFile(params)
         file.fileName = params.fileName

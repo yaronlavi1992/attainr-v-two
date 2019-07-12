@@ -81,7 +81,7 @@
 
 
 </script>
-<h1 class="title text-center">בקשת רכש חדשה</h1>
+<h1 class="title text-center">עריכת בקשה</h1>
 <g:uploadForm dir="rtl" resource="${this.purchase}" controller="purchase" class="float-center container" action="saveAfterEdit"
               method="POST">
     <table>

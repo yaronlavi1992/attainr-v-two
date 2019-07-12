@@ -1,7 +1,5 @@
 package attainrvtwo
 
-import com.sun.org.apache.xpath.internal.operations.Bool
-
 class ManagementController {
 
     PurchaseService purchaseService
@@ -97,7 +95,7 @@ class ManagementController {
 //        respond purchaseList, model: [purchaseCount: purchaseService.count()]
 //    }
 
-    def choice(Long id) {
+    def choice(Long id) { // sets approvals with a given choice according to session user role and updates purchase request
         Purchase purchase = purchaseService.get(id)
         if (session.role == RoleOf.LEISURE_AND_SECRETARY_CEO ||
                 session.role == RoleOf.MAINTENANCE_AND_SPORT_CEO ||
@@ -124,7 +122,7 @@ class ManagementController {
         redirect(controller: "user", action: "statusDisplay")
     }
 
-    def alreadyPurchased(Long id) {
+    def alreadyPurchased(Long id) { // sets purchase status to PURCHASED
         Purchase purchase = purchaseService.get(id)
         statusUpdate(purchase)
         redirect(controller: "user", action: "statusDisplay")

@@ -5,7 +5,7 @@
 <head>
     <meta name="layout" content="main"/>
     <g:set var="entityName" value="${message(code: 'purchase.label', default: 'Purchase')}"/>
-    <title>ניהול קהילה</title>
+    <title><g:message code="default.list.label" args="[entityName]"/></title>
 </head>
 <body>
 <a href="#list-purchase" class="skip" tabindex="-1">
@@ -13,7 +13,6 @@
 </a>
 <div class="nav" role="navigation">
     <ul>
-        <!--        <li><a class="home" href="${createLink(uri: '/volunteer/index')}"><g:message code="default.home.label"/></a></li>-->
         <li>
             <g:link class="create" action="create" controller="purchase">בקשה חדשה</g:link>
         </li>
@@ -35,7 +34,7 @@
         <h1><b>בקשות מתאריך<br>${startingDate_day} ${startingDate_month} ${startingDate_year} עד <br> ${closingDate_day} ${closingDate_month} ${closingDate_year}</b></h1>
     </div>
     <h1>
-        <g:message code="default.list.label" args="[entityName]"/>
+        רשימת בקשות
     </h1>
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
