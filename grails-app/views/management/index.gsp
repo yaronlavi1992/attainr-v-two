@@ -36,6 +36,11 @@
                       value="${departments}" noSelection="${['null':'לפי מחלקת..']}"
                       onchange="goToDepartment(this.value)"/>
         </li>
+<!--        <li>-->
+<!--            <g:link class="btn bg-info text-white" dir="rtl" action="filterByDate" controller="management">-->
+<!--                לפי תאריך-->
+<!--            </g:link>-->
+<!--        </li>-->
     </ul>
 </div>
 <div id="list-purchase" class="content scaffold-list" role="main">

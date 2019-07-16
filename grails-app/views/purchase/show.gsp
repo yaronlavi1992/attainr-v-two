@@ -89,7 +89,7 @@
                     params="[id: params.id]">הוסף הערה
             </g:link>
         </li>
-        <g:if test="${session.permission == PermissionOf.MID || session.permission == PermissionOf.HIGH}">
+        <g:if test="${(session.permission == PermissionOf.MID || session.permission == PermissionOf.HIGH) && this.purchase.get(params.id).status != PurchaseStatus.PAYMENT_REQUIRED}">
             <li>
                 <g:link class="btn bg-danger text-white" action="choice" controller="management"
                         params="[id: params.id, choice: false]">דחיית בקשה
@@ -239,18 +239,18 @@
             <td class="text-right">קובץ</td>
         </tr>
         </thead>
-        <g:each in="${purchase.comments}">
+        <g:each status="i" in="${(purchase.comments).sort{it.id}}" var="item">
             <tbody>
             <tr>
                 <td class="text-right">
-                    ${it.user}
+                    ${item.user}
                 </td>
                 <td class="text-right">
-                    ${it.content}
+                    ${item.content}
                 </td>
                 <td class="text-right">
-                    <g:link controller="myFile" action="showFile" id="${it?.file?.id}"
-                            name="firstQuoteAttachment" disabled="true">${it?.file}
+                    <g:link controller="myFile" action="showFile" id="${item?.file?.id}"
+                            name="firstQuoteAttachment" disabled="true">${item?.file}
                     </g:link>
                 </td>
             </tr>

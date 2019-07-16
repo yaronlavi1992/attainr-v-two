@@ -78,22 +78,24 @@ class ManagementController {
         respond purchaseList, model: [purchaseCount: purchaseService.count()]
     }
 
-//    def filterByDate() {
-//        purchaseList = Purchase.list()
-//        Date formattedStartingDate
-//        Date formattedClosingDate
-//        if (params.startingDate_day) {
-//            // convert to Date class
-//            formattedStartingDate = Date.parse('dd MM yyyy', (params.startingDate_day + " " + params.startingDate_month + " " + params.startingDate_year))
-//            formattedClosingDate = Date.parse('dd MM yyyy', (params.closingDate_day + " " + params.closingDate_month + " " + params.closingDate_year))
-//        }
-////        purchaseList = Purchase.findAll {
-////            ((it.paymentDateApproval).date >= formattedStartingDate) &&
-////                    ((it.paymentCloseDateApproval).date <= formattedClosingDate)
-////        }
-//        purchaseList = Purchase.findAllByPaymentDateApprovalAndPaymentCloseDateApproval(Approval.findAllByDateGreaterThanEquals(formattedStartingDate),Approval.findAllByDateLessThanEquals(formattedClosingDate))
-//        respond purchaseList, model: [purchaseCount: purchaseService.count()]
-//    }
+    def filterByDate() {
+        purchaseList = Purchase.list()
+        Date formattedStartingDate
+        Date formattedClosingDate
+        if (params.startingDate_day) {
+            // convert to Date class
+            formattedStartingDate = Date.parse('dd MM yyyy', (params.startingDate_day + " " + params.startingDate_month + " " + params.startingDate_year))
+            formattedClosingDate = Date.parse('dd MM yyyy', (params.closingDate_day + " " + params.closingDate_month + " " + params.closingDate_year))
+        }
+        purchaseList = Purchase.findAll {
+            ((it?.paymentDateApproval)?.date >= formattedStartingDate) &&
+                    ((it?.paymentCloseDateApproval)?.date <= formattedClosingDate)
+        }
+        purchaseList = Purchase?.findAllByPaymentDateApproval(Approval?.date >= formattedStartingDate)
+        purchaseList = purchaseList?.intersect(Purchase?.findAllByPaymentCloseDateApproval(Approval?.date <= formattedClosingDate))
+//        purchaseList = Purchase.findAllByPaymentDateApprovalAndPaymentCloseDateApproval(Approval?.findAllByDateGreaterThanEquals(formattedStartingDate),Approval?.findAllByDateLessThanEquals(formattedClosingDate))
+        respond purchaseList, model: [purchaseCount: purchaseService.count()]
+    }
 
     def choice(Long id) { // sets approvals with a given choice according to session user role and updates purchase request
         Purchase purchase = purchaseService.get(id)
